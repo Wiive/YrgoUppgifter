@@ -1,0 +1,58 @@
+void setup()
+{
+  size(768, 432);
+}
+
+
+void draw()
+{
+  background(0, 0, 0);
+	
+  noStroke();
+ 
+  //Drawing blue L
+  fill(0, 50 , 255);
+  rect(200, 200, 10, 50);
+  rect(200, 250, 50, 10);
+
+  //Drawing blue O
+  ellipseMode(CORNER);  
+  fill(0, 50 , 255); 
+  ellipse(260, 200, 52, 60);  
+  //Drawing black part of O
+  ellipseMode(CORNER);  
+  fill(0);
+  ellipse(280, 230, 20, 20);  
+
+  //Drawing blue U
+  ellipseMode(CORNER);  
+  fill(0, 50 , 255); 
+  ellipse(320, 200, 52, 60);  
+
+  //Drawing black part of U
+  ellipseMode(CORNER);  
+  fill(0);
+  ellipse(334, 190, 25, 30);  
+
+  //Drawing I
+  fill(0, 50 , 255); 
+  rect(385, 220, 10, 40);
+  ellipse(384, 200, 13, 13);  
+
+   //Drawing blue S
+  ellipseMode(CORNER);  
+  fill(0, 50 , 255); 
+  ellipse(410, 200, 52, 60);  
+  //Drawing black parts of S
+  ellipseMode(CORNER);  
+  fill(0);
+  ellipse(407, 233, 26, 20);  
+  ellipseMode(CORNER);  
+  fill(0);
+  ellipse(441, 212, 26, 20);  
+
+  //Drawing E
+  fill(234, 255 , 0); 
+  arc(477, 193, 65, 65, -3, PIE-QUARTER_PI, PIE);
+
+}
