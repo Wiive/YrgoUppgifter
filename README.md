@@ -1,14 +1,13 @@
-# Uppgifter
+## Uppgifter
 
-## Programming Fundamentals
+### Programming Fundamentals
 01 Fundamentals Name
->  Name.pde
->
->  Name.png
+-  Name.pde
+-  Name.png
 
 
-02 Learning ti Program
-> Parabolic Curve Assignment
+02 Learning to Program
+- Parabolic Curve Assignment
 
 
 03 Vectors
