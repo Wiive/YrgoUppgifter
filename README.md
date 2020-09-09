@@ -1,5 +1,6 @@
 # Uppgifter
 
 ## Programming Fundamentals
--- 01 Fundamentals Name
-> **Note** Gonna se if I can import a png of the name here. 
+01 Fundamentals Name
+>  Name.pde
+>  Name.png
