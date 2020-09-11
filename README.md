@@ -11,4 +11,6 @@
 
 
 03 Vectors
-- Assignment coming soon
+- Assignment03 **I calling it "Walking the Dog"**
+- Assignment03_1_2 seccond solution
+
