@@ -7,10 +7,16 @@
 
 
 02 Learning to Program
-- Parabolic Curve Assignment
+- Assignment02
+- Parabolic Curve Class WIP
 
 
 03 Vectors
 - Assignment03 *(I calling it "Walking the Dog")*
 - Assignment03_1_2 seccond solution
+- GuessVector WIP
 
+
+04 Input and Motion
+- Assignment04
+- Extracurricular04
