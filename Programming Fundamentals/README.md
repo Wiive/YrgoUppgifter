@@ -29,5 +29,5 @@
 07 Collision and Zombies
 - Assignment07
 
-10 Game if Life
+10 Game of Life
 - Assignment10 with (WIP)extracurricular
