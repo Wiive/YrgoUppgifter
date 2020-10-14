@@ -36,4 +36,8 @@
 ### Unity:
 
 11 Unity Introduction
-- Assignment 11 witch extracurricular
+- Assignment 11 with extracurricular
+
+12 Input and Movement
+- Assignment 12 with extracurricular
+- Suggestion - Make the sprite face the current direction?
