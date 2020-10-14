@@ -1,7 +1,6 @@
-## Uppgifter
+## Uppgifter Programming Fundamentals
 
-### Programming Fundamentals
-**Processing:**
+### Processing:
 
 01 Fundamentals
 -  Name.pde
@@ -34,7 +33,7 @@
 10 Game of Life
 - Assignment10 with (WIP)extracurricular
 
-**Unity:**
+### Unity:
 
 11 Unity Introduction
 - Assignment 11 witch extracurricular
