@@ -44,8 +44,11 @@ class LouBul implements WalkerInterface {
   PVector down = new PVector(0, 1);
   PVector left = new PVector(-1, 0);
   PVector right = new PVector(1, 0);
+
   int switchInput = 1;
-  //Do not use processing variables like width or height
+ 
+  boolean swapDirection = false;
+  int previusDirection;
 
   public String getName()
   {
@@ -66,24 +69,22 @@ class LouBul implements WalkerInterface {
   }
 
   public PVector update()
-  {
-    
-    if ((currrentPosision.y+1) == screenHeight){
-      switchInput = 3;         
+  {    
+    swapDirection = alovidToMove(currrentPosision, screenHeight, screenWidth);
+    if (swapDirection)
+    {
+      switchInput = switchInput;
     }
-    if ((currrentPosision.x+1) == screenWidth && (currrentPosision.y+1) < screenHeight){
-      switchInput = 2;            
+    else
+    {
+      previusDirection = switchInput;
+      switchInput = (int)random(0, 4);
+      if (switchInput == previusDirection)
+      {
+        switchInput = (int)random(0, 4);
+      }
     }
-    if ((currrentPosision.x-1) == 0){
-      switchInput = 0;            
-    }
-     if ((currrentPosision.y-1) == 0){
-      switchInput = 1;            
-    }
-    
 
-    //add your own walk behavior for your walker here.
-    //Make sure to only use the outputs listed below.
 
     switch(switchInput) {
     case 0:
@@ -108,13 +109,18 @@ class LouBul implements WalkerInterface {
   }
 }
 
-//All valid outputs:
-// PVector(-1, 0);
-// PVector(1, 0);
-// PVector(0, 1);
-// PVector(0, -1);
 
-//Any other outputs will kill the walker!
+public boolean alovidToMove(PVector vector, int height, int width)
+{
+ if ((vector.y) < this.height
+    && (vector.x) < this.width
+    && (vector.x) >= 0
+    && (vector.y) >= 0)
+ {
+  return true;
+ }
+  else return false;
+}
 interface WalkerInterface {
   //returns the name of the walker, should be your name!
   public String getName();
