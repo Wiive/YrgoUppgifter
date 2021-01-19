@@ -2,6 +2,7 @@ class LouBul implements WalkerInterface {
   
   int screenWidth;
   int screenHeight;
+  int frame = 0;
 
   PVector currrentPosision;
   PVector up = new PVector(0, -1);
@@ -11,7 +12,7 @@ class LouBul implements WalkerInterface {
 
   int switchInput = 1;
  
-  boolean swapDirection = false;
+  boolean swapDirection;
   int previusDirection;
 
   String getName()
@@ -33,53 +34,47 @@ class LouBul implements WalkerInterface {
   }
 
   PVector update()
-  {    
+  {        
     swapDirection = alovidToMove(currrentPosision, screenHeight, screenWidth);
     if (swapDirection)
     {
-      switchInput = switchInput;
-    }
-    else
-    {
-      previusDirection = switchInput;
-      switchInput = (int)random(0, 4);
-      if (switchInput == previusDirection)
+      if (frame % 5 == 0)
       {
         switchInput = (int)random(0, 4);
       }
     }
-
+    else
+    {
+        
+      switchInput = (int)random(0, 4);      
+    }
+    frame++;
 
     switch(switchInput) {
     case 0:
       currrentPosision = currrentPosision.add(left);
-      print("left");
       return new PVector(-1, 0);
     case 1:
       currrentPosision = currrentPosision.add(right);
-      print("right");
       return new PVector(1, 0);
     case 2:
       currrentPosision = currrentPosision.add(down);
-      print("down");
       return new PVector(0, 1);
-    case 3:
-      currrentPosision = currrentPosision.add(up);
-      print("up");
-      return new PVector(0, -1);
     default:
-      return new PVector(0, 0);
+      currrentPosision = currrentPosision.add(up);
+      return new PVector(0, -1);
     }
+    
   }
 }
 
 
 boolean alovidToMove(PVector vector, int height, int width)
 {
- if ((vector.y) < this.height
-    && (vector.x) < this.width
-    && (vector.x) >= 0
-    && (vector.y) >= 0)
+ if ((vector.y+5) < this.height
+    && (vector.x+5) < this.width
+    && (vector.x-5) > 0
+    && (vector.y-5) > 0)
  {
   return true;
  }

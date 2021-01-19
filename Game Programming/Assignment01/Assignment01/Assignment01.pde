@@ -21,7 +21,7 @@ void sinCurve()
 {    
   for (int i = 0; i < numberOfPoints; i++)
   {
-    point(405 + i * 2, height/2 + sin((frame * 0.044) + i) * 171);
+    point(373 + i * 3, height/2 + sin((frame * 0.023) + i) * 166);
     
   }
 }
@@ -30,7 +30,7 @@ void cosCurve()
 {
     for (int i = 0; i < numberOfPoints; i++)
   {
-    point(290 + i * 2, height/2 + cos((frame * 0.044) + i) * 171);
+    point(50 + i * 3, height/2 + cos((frame * 0.023) + i) * 171);
     
   }
 }
