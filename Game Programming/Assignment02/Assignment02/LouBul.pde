@@ -1,7 +1,5 @@
 class LouBul implements WalkerInterface {
-  
-  int screenWidth;
-  int screenHeight;
+  PVector screen;
   int frame = 0;
 
   PVector currrentPosision;
@@ -27,15 +25,14 @@ class LouBul implements WalkerInterface {
     float y = (int) random(0, playAreaHeight);
 
     //a PVector holds floats but make sure its whole numbers that are returned!
-    screenWidth = playAreaWidth;
-    screenHeight = playAreaHeight;
+    screen = new PVector(playAreaWidth, playAreaHeight);
     currrentPosision = new PVector((int)x, (int)y);
     return new PVector((int)x, (int)y);
   }
 
   PVector update()
-  {        
-    swapDirection = alovidToMove(currrentPosision, screenHeight, screenWidth);
+  {            
+    swapDirection = alovidToMove(currrentPosision, screen);
     if (swapDirection)
     {
       if (frame % 5 == 0)
@@ -53,28 +50,40 @@ class LouBul implements WalkerInterface {
     switch(switchInput) {
     case 0:
       currrentPosision = currrentPosision.add(left);
+      constrainWalker(currrentPosision, screen);
       return new PVector(-1, 0);
     case 1:
       currrentPosision = currrentPosision.add(right);
+        constrainWalker(currrentPosision, screen);
       return new PVector(1, 0);
     case 2:
       currrentPosision = currrentPosision.add(down);
+        constrainWalker(currrentPosision, screen);
       return new PVector(0, 1);
     default:
       currrentPosision = currrentPosision.add(up);
+        constrainWalker(currrentPosision, screen);
       return new PVector(0, -1);
     }
     
+
+   
   }
 }
 
-
-boolean alovidToMove(PVector vector, int height, int width)
+void constrainWalker(PVector vector, PVector bounderies)
 {
- if ((vector.y+5) < this.height
-    && (vector.x+5) < this.width
-    && (vector.x-5) > 0
-    && (vector.y-5) > 0)
+   vector.x = constrain(vector.x, 0, bounderies.x);
+   vector.y = constrain(vector.y, 0, bounderies.y);
+}
+
+
+boolean alovidToMove(PVector vector, PVector screenSize)
+{
+ if ((vector.y+10) < screenSize.y
+    && (vector.x+10) < screenSize.x
+    && (vector.x-10) > 0
+    && (vector.y-10) > 0)
  {
   return true;
  }
