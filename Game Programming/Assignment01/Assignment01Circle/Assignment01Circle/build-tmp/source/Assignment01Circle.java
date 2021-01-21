@@ -14,29 +14,32 @@ import java.io.IOException;
 
 public class Assignment01Circle extends PApplet {
 
+int frame = 0;
 int numberOfPoints = 50;
 
 public void setup()
 {	
 	
-	strokeWeight(5);
+  frameRate(30);
+	strokeWeight(4);
 }
 
 public void draw()
 {
-	background(0);
-	stroke(255);
+	background(136,209,255);
+	stroke(255,202,248);
 
 	drawSprial(20);
-    drawCircle(50);
+  drawCircle(50);
+  frame++;
 }
 
 public void drawSprial(int n)
 {
 	for (int i = 0; i < n; i++)
 	{
-		float x = cos(i * TWO_PI/n) * i * 5;
-    	float y = sin(i * TWO_PI/n) * i * 5;
+		float x = cos((frame * 0.005f)* i * TWO_PI/n) * i * 5;
+    	float y = sin((frame * 0.005f) * i * TWO_PI/n) * i * 5;
     	ellipse(width/2 + x, height/2 + y, 4, 4);
 	}
 }
@@ -45,8 +48,8 @@ public void drawCircle(int n)
 {
 	for (int i = 0; i < n; i++)
 	{
-		float x = cos(i * TWO_PI/n) * 100;
-    	float y = sin(i * TWO_PI/n) * 100;
+		float x = cos((frame * 0.005f) * i * TWO_PI/n) * 100;
+    	float y = sin((frame * 0.005f) * i * TWO_PI/n) * 100;
     	ellipse(width/2 + x, height/2 + y, 4, 4);
 	}
 }

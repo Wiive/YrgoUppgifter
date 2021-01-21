@@ -6,7 +6,7 @@ WalkerInterface walker;
 PVector walkerPos;
 
 void setup() {
-  size(500, 500);
+  size(100, 100);
 
   //Create a walker from the class Example it has the type of WalkerInterface
   walker = new LouBul();
