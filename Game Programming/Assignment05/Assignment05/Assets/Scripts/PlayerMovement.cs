@@ -18,11 +18,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (movement.sqrMagnitude > 0.05f)
         {
-            rigidBody2d.velocity = transform.position + movement * speed;
+            transform.up = movement;
+            transform.eulerAngles = new Vector3(0, 0, transform.eulerAngles.z);
+
+            rigidBody2d.velocity = transform.up * speed;
+          
         }
         else
-            rigidBody2d.velocity = transform.position * 0f;
-       
-        //rigidBody2d.MovePosition(transform.position + (movement * speed * Time.deltaTime));
+        {
+            rigidBody2d.velocity = Vector3.zero;
+        }
+        
     }
 }
