@@ -4,6 +4,11 @@ using System.Net;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using Firebase;
+using Firebase.Auth;
+using Firebase.Database;
+using Firebase.Extensions;
+using System.Collections;
 
 [Serializable]
 public class OurPlayers
@@ -54,14 +59,20 @@ public class SaveManager : MonoBehaviour
 
         //save that
         //PlayerPrefs.SetString("json", jsonsString);
-        SaveToFile("SiblingWasGame", jsonsString);
-        SaveOnline("SiblingWasGame", jsonsString);
+        //SaveToFile("SiblingWasGame", jsonsString);
+        //SaveOnline("SiblingWasGame", jsonsString);
+        SaveToFireBase(jsonsString);
 
         //Save players rotations
         PlayerPrefs.SetFloat("p1-rot-z", playerOne.transform.eulerAngles.z);
         PlayerPrefs.SetFloat("p2-rot-z", playerTwo.transform.eulerAngles.z);
     }
 
+    private void SaveToFireBase(string data)
+    {
+        var db = FirebaseDatabase.DefaultInstance;
+        var dataTask = db.RootReference.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).SetRawJsonValueAsync(data);
+    }
 
     public void LoadData()
     {
@@ -73,23 +84,39 @@ public class SaveManager : MonoBehaviour
         string jsonString2 = Load("SiblingWasGame");
 
         //Load from server
-        string jsonString = LoadOnline("SiblingWasGame");
+        //string jsonString = LoadOnline("SiblingWasGame");
 
-        if (jsonString != jsonString2)
-        {
-            Debug.LogError("Files are not the SAME!");
-        }
+        LoadFromFirebase();
 
-        Debug.Log(jsonString);
+    }
 
+
+    private void LoadFromFirebase()
+    {
+        var db = FirebaseDatabase.DefaultInstance;
+        var dataTask = db.RootReference.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).GetValueAsync().ContinueWithOnMainThread(task =>
+        { 
+            if (task.Exception != null)
+            {
+                Debug.LogError(task.Exception);
+            }
+            DataSnapshot snap = task.Result;
+
+           LoadState(snap.GetRawJsonValue());
+        });
+    }
+
+
+    private void LoadState(string jsonString)
+    {
         var ourPlayers = JsonUtility.FromJson<OurPlayers>(jsonString);
 
         var players = FindObjectsOfType<PlayerMovement>();
 
         for (int i = 0; i < players.Length; i++)
         {
-           players[i].transform.position = ourPlayers.players[i].Position;
-           players[i].name = ourPlayers.players[i].Name;
+            players[i].transform.position = ourPlayers.players[i].Position;
+            players[i].name = ourPlayers.players[i].Name;
         }
 
         //Load Names
@@ -104,7 +131,7 @@ public class SaveManager : MonoBehaviour
         Vector3 rot = Vector3.zero;
 
         rot.z = PlayerPrefs.GetFloat("p1-rot-z");
-        playerOne.transform.eulerAngles = new Vector3(0,0, rot.z);
+        playerOne.transform.eulerAngles = new Vector3(0, 0, rot.z);
 
         rot.z = PlayerPrefs.GetFloat("p2-rot-z");
         playerTwo.transform.eulerAngles = new Vector3(0, 0, rot.z);
