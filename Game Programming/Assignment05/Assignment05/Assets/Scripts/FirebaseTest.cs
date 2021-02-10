@@ -4,9 +4,17 @@ using Firebase;
 using Firebase.Auth;
 using Firebase.Database;
 using Firebase.Extensions;
+using TMPro;
+using UnityEngine.UI;
 
 public class FirebaseTest : MonoBehaviour
 {
+	public TMP_InputField emailTextBox;
+	public TMP_InputField passwordTextBox;
+	public TMP_Text accountLoginWarning;
+
+	private LevelManager levelManager;
+
 	void Start()
 	{
 		FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
@@ -16,10 +24,12 @@ public class FirebaseTest : MonoBehaviour
 				Debug.LogError(task.Exception);
 			}
 
-			//Run this the first time, then run the "SignIn" coroutine instead.
-			StartCoroutine(SignIn("test2@test.test", "password2"));
-			//StartCoroutine(SignIn("test@test.test", "test123!"));
+
+			//StartCoroutine(SignIn("test2@test.test", "password2"));	SAVE FOR PASSWORD
+			//StartCoroutine(SignIn("test@test.test", "password"));		SAVE FOR PASSWORD
 		});
+		accountLoginWarning.text = "";
+		levelManager = GetComponent<LevelManager>();
 	}
 
 	private IEnumerator RegUser(string email, string password)
@@ -35,6 +45,13 @@ public class FirebaseTest : MonoBehaviour
 			Debug.Log("Registration Complete");
 	}
 
+	public void TryToSignIn()
+	{
+		var email = emailTextBox.text;
+		var password = passwordTextBox.text;
+		StartCoroutine(SignIn(email, password));
+	}
+
 	private IEnumerator SignIn(string email, string password)
 	{
 		Debug.Log("Atempting to log in");
@@ -43,9 +60,16 @@ public class FirebaseTest : MonoBehaviour
 		yield return new WaitUntil(() => loginTask.IsCompleted);
 
 		if (loginTask.Exception != null)
+		{
+			accountLoginWarning.text = "That account does not exist";
 			Debug.LogWarning(loginTask.Exception);
+		}
 		else
+		{
+			accountLoginWarning.text = "";
 			Debug.Log("login completed");
+			levelManager.LoadScene("DiceGame");
+		}
 
 		StartCoroutine(DataTest(FirebaseAuth.DefaultInstance.CurrentUser.UserId, "TestWrite"));
 	}
@@ -63,4 +87,5 @@ public class FirebaseTest : MonoBehaviour
 		else
 			Debug.Log("DataTestWrite: Complete");
 	}
+
 }
