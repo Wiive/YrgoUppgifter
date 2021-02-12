@@ -612,6 +612,7 @@ GameObject:
   - component: {fileID: 595041272}
   - component: {fileID: 595041274}
   - component: {fileID: 595041273}
+  - component: {fileID: 595041275}
   m_Layer: 5
   m_Name: Player2
   m_TagString: Untagged
@@ -678,6 +679,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 595041271}
   m_CullTransparentMesh: 0
+--- !u!114 &595041275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595041271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1885aeb1ee46824a9bb0dd318ee9d7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &606825956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1920,6 +1933,8 @@ MonoBehaviour:
   dice1: {fileID: 893578050}
   dice2: {fileID: 960870096}
   diceValue: {fileID: 1133850667}
+  player1Score: {fileID: 0}
+  player2Score: {fileID: 0}
 --- !u!1 &1793275442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1931,6 +1946,7 @@ GameObject:
   - component: {fileID: 1793275443}
   - component: {fileID: 1793275445}
   - component: {fileID: 1793275444}
+  - component: {fileID: 1793275446}
   m_Layer: 5
   m_Name: Player1
   m_TagString: Untagged
@@ -1997,6 +2013,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793275442}
   m_CullTransparentMesh: 0
+--- !u!114 &1793275446
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793275442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b1885aeb1ee46824a9bb0dd318ee9d7c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1990973405
 GameObject:
   m_ObjectHideFlags: 0

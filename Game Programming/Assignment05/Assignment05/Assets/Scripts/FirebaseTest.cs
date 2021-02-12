@@ -9,9 +9,17 @@ using UnityEngine.UI;
 
 public class FirebaseTest : MonoBehaviour
 {
+	[Header("Sign In")]
 	public TMP_InputField emailTextBox;
 	public TMP_InputField passwordTextBox;
 	public TMP_Text accountLoginWarning;
+
+	[Header("Sign Up")]
+	public CanvasGroup signUpCanvas;
+	public TMP_InputField newEmail;
+	public TMP_InputField newPassword;
+	public TMP_InputField confirmPassword;
+	public TMP_InputField newName;
 
 	private LevelManager levelManager;
 
@@ -30,9 +38,28 @@ public class FirebaseTest : MonoBehaviour
 		});
 		accountLoginWarning.text = "";
 		levelManager = GetComponent<LevelManager>();
+		signUpCanvas.alpha = 0;
+		signUpCanvas.blocksRaycasts = false;
 	}
 
-	private IEnumerator RegUser(string email, string password)
+
+	public void TryToAddUser()
+	{
+		var email = newEmail.text;
+		var password = newPassword.text;
+		var checkPassword = confirmPassword.text;
+		if (password != checkPassword)
+		{
+			Debug.Log("passwords not the same");
+		}
+		else
+		{
+			StartCoroutine(RegUser(email, password, checkPassword));
+			HideSignUpCanvas();
+		}			
+	}
+
+	private IEnumerator RegUser(string email, string password, string checkPassword)
 	{
 		Debug.Log("Starting Registration");
 		var auth = FirebaseAuth.DefaultInstance;
@@ -40,10 +67,28 @@ public class FirebaseTest : MonoBehaviour
 		yield return new WaitUntil(() => regTask.IsCompleted);
 
 		if (regTask.Exception != null)
+		{
 			Debug.LogWarning(regTask.Exception);
+		}
 		else
+		{
 			Debug.Log("Registration Complete");
+		}
 	}
+
+
+	public void ShowSignUpCanvas()
+	{
+		signUpCanvas.alpha = 1;
+		signUpCanvas.blocksRaycasts = true;
+	}
+
+	public void HideSignUpCanvas()
+	{
+		signUpCanvas.alpha = 0;
+		signUpCanvas.blocksRaycasts = false;
+	}
+
 
 	public void TryToSignIn()
 	{
@@ -51,6 +96,7 @@ public class FirebaseTest : MonoBehaviour
 		var password = passwordTextBox.text;
 		StartCoroutine(SignIn(email, password));
 	}
+
 
 	private IEnumerator SignIn(string email, string password)
 	{
@@ -87,5 +133,4 @@ public class FirebaseTest : MonoBehaviour
 		else
 			Debug.Log("DataTestWrite: Complete");
 	}
-
 }
