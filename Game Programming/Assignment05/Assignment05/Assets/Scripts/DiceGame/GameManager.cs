@@ -9,26 +9,71 @@ public class GameManager : MonoBehaviour
     public DiceSides dice2;
     public TMP_Text diceValue;
 
-    public TMP_Text player1Score;
-    public TMP_Text player2Score;
+    public DicePlayerBehavoir player1;
+    public DicePlayerBehavoir player2;
+
+    private int currentValue;
+    private int oldValue;
+
+    private int scoreGiven = 500;
+    public int round = 0;
+    bool player1turn;
 
     private void Start()
     {
         diceValue.text = "";
+
+        //Later make playerscore load form json /firebase
+        player1.ChangeScoreText(player1.GetScore().ToString());
+        player2.ChangeScoreText(player2.GetScore().ToString());
+    }
+
+    public void NewTurn()
+    {
+        UpdateValue();
+        CalculateScores();
+        oldValue = currentValue;
     }
 
     public void UpdateValue()
     {
+        currentValue = dice1.GetValue() + dice2.GetValue();
         diceValue.text = (dice1.GetValue() + dice2.GetValue()).ToString();
     }
 
+
     private void CalculateScores()
     {
-        //Do some math based on players guess.
+        var player1Guess = player1.playerGuessHiger;
+        var player2Guess = player2.playerGuessHiger;
+
+        if (player1Guess == CompereDices() && player2Guess == CompereDices())
+        {
+            Debug.Log("Both Players Guess right!");
+            player1.UpdateScore(scoreGiven / 2);
+            player2.UpdateScore(scoreGiven / 2);
+        }
+        else if (player1Guess == CompereDices())
+        {
+            player1.UpdateScore(scoreGiven);
+        }
+        else if (player2Guess == CompereDices())
+        {
+            player2.UpdateScore(scoreGiven);
+        }
+        player1.ChangeScoreText(player1.GetScore().ToString());
+        player2.ChangeScoreText(player2.GetScore().ToString());
     }
 
-    private void ReadPlayerGusses()
+    public bool CompereDices()
     {
-        //Make bools or enums for what the player have choosen and make sure it is some kind of turn calculating?
+        if (currentValue > oldValue)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }

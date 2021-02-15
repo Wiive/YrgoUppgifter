@@ -231,7 +231,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1768956830}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: UpdateValue
+        m_MethodName: NewTurn
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -327,12 +327,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}
   m_ScreenMatchMode: 0
-  m_MatchWidthOrHeight: 0
+  m_MatchWidthOrHeight: 1
   m_PhysicalUnit: 3
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
@@ -638,7 +638,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 300, y: 0}
+  m_AnchoredPosition: {x: 350, y: 0}
   m_SizeDelta: {x: 251.77643, y: 438.21402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &595041273
@@ -691,6 +691,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1885aeb1ee46824a9bb0dd318ee9d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
+  inGameName: 
+  scoreText: {fileID: 346821361}
+  playerGuessHiger: 0
+  hasGuessed: 0
 --- !u!1 &606825956
 GameObject:
   m_ObjectHideFlags: 0
@@ -1933,8 +1938,9 @@ MonoBehaviour:
   dice1: {fileID: 893578050}
   dice2: {fileID: 960870096}
   diceValue: {fileID: 1133850667}
-  player1Score: {fileID: 0}
-  player2Score: {fileID: 0}
+  player1: {fileID: 1793275446}
+  player2: {fileID: 595041275}
+  round: 0
 --- !u!1 &1793275442
 GameObject:
   m_ObjectHideFlags: 0
@@ -1972,7 +1978,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -300, y: 0}
+  m_AnchoredPosition: {x: -350, y: 0}
   m_SizeDelta: {x: 251.77643, y: 438.21402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1793275444
@@ -2025,6 +2031,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b1885aeb1ee46824a9bb0dd318ee9d7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  score: 0
+  inGameName: 
+  scoreText: {fileID: 1990973407}
+  playerGuessHiger: 0
+  hasGuessed: 0
 --- !u!1 &1990973405
 GameObject:
   m_ObjectHideFlags: 0
