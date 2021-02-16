@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
         player2.ChangeScoreText(player2.GetScore().ToString());
 
         UpdateValue();
+        oldValue = currentValue;
     }
 
     public void NewTurn()
@@ -34,6 +35,8 @@ public class GameManager : MonoBehaviour
         UpdateValue();
         CalculateScores();
         oldValue = currentValue;
+        player1.hasGuessed = false;
+        player2.hasGuessed = false;
     }
 
     public void UpdateValue()
