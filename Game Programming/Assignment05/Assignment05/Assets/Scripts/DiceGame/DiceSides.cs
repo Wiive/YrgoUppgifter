@@ -13,9 +13,10 @@ public class DiceSides : MonoBehaviour
 
     private int currentValue;
 
-    private void Start()
+    private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        RollTheDie();
     }
 
     public void RollTheDie()

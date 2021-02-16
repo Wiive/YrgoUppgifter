@@ -21,11 +21,12 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        diceValue.text = "";
 
         //Later make playerscore load form json /firebase
         player1.ChangeScoreText(player1.GetScore().ToString());
         player2.ChangeScoreText(player2.GetScore().ToString());
+
+        UpdateValue();
     }
 
     public void NewTurn()

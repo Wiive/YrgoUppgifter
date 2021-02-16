@@ -28,11 +28,7 @@ public class DicePlayerBehavoir : MonoBehaviour
 
     public void GuessValue(string guess)
     {
-        if (guess != "up" || guess != "down")
-        {
-            Debug.LogError("You inserted not up and down, invalid value to GuessValue");
-        }
-        else
+        if (guess == "up" || guess == "down")
         {
             if (guess == "up")
             {
@@ -42,7 +38,11 @@ public class DicePlayerBehavoir : MonoBehaviour
             {
                 playerGuessHiger = false;
             }
-            hasGuessed = true;
+            hasGuessed = true;           
+        }
+        else
+        {
+            Debug.LogError("You inserted not up and down, invalid value to GuessValue");
         }    
     }
 }
