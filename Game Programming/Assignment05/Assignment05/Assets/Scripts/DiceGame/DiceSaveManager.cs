@@ -61,5 +61,4 @@ public class DiceSaveManager : MonoBehaviour
         var db = FirebaseDatabase.DefaultInstance;
         var dataTask = db.RootReference.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).SetRawJsonValueAsync(data);
     }
-
 }

@@ -15,28 +15,39 @@ public class GameManager : MonoBehaviour
     private int currentValue;
     private int oldValue;
 
-    private int scoreGiven = 500;
+    public TMP_Text roundText;
+    public int maxRounds = 20;
     public int round = 0;
-    bool player1turn;
+    private bool player1turn;                                        //Use if only one player can go each turn.
+
+    private int scoreGiven = 500;
 
     private void Start()
-    {
-
-        //Later make playerscore load form json /firebase
-        player1.ChangeScoreText(player1.GetScore().ToString());
+    {               
+        player1.ChangeScoreText(player1.GetScore().ToString());     //Later make playerscore load form json /firebase
         player2.ChangeScoreText(player2.GetScore().ToString());
 
         UpdateValue();
         oldValue = currentValue;
+        roundText.text = "Round: " + round.ToString() + "/" + maxRounds.ToString();
     }
 
-    public void NewTurn()
+    public void NewRound()
     {
-        UpdateValue();
-        CalculateScores();
-        oldValue = currentValue;
-        player1.hasGuessed = false;
-        player2.hasGuessed = false;
+        if (round < maxRounds)
+        {
+            UpdateValue();
+            CalculateScores();
+            oldValue = currentValue;
+            player1.hasGuessed = false;
+            player2.hasGuessed = false;
+            round++;
+            roundText.text = "Round: "+ round.ToString() + "/" + maxRounds.ToString();
+        }
+        else
+        {
+            Debug.Log("Game is finnised!");
+        }      
     }
 
     public void UpdateValue()
@@ -48,12 +59,16 @@ public class GameManager : MonoBehaviour
 
     private void CalculateScores()
     {
+        while(currentValue == oldValue)
+        {
+            ReRollDices();
+        }
+
         var player1Guess = player1.playerGuessHiger;
         var player2Guess = player2.playerGuessHiger;
 
         if (player1Guess == CompereDices() && player2Guess == CompereDices())
         {
-            Debug.Log("Both Players Guess right!");
             player1.UpdateScore(scoreGiven / 2);
             player2.UpdateScore(scoreGiven / 2);
         }
@@ -68,6 +83,15 @@ public class GameManager : MonoBehaviour
         player1.ChangeScoreText(player1.GetScore().ToString());
         player2.ChangeScoreText(player2.GetScore().ToString());
     }
+
+
+    private void ReRollDices()
+    {
+        dice1.RollTheDie();
+        dice2.RollTheDie();
+        UpdateValue();
+    }
+
 
     public bool CompereDices()
     {
