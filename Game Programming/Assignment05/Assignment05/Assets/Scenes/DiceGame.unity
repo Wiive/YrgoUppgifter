@@ -375,7 +375,7 @@ RectTransform:
   - {fileID: 606825957}
   - {fileID: 55349538}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -516,6 +516,52 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 252834447}
   m_CullTransparentMesh: 0
+--- !u!1 &346410645
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 346410646}
+  - component: {fileID: 346410647}
+  m_Layer: 0
+  m_Name: EffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &346410646
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346410645}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 516.6138, y: 236.21576, z: -29.288937}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &346410647
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346410645}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 167b9c8d21df7d14f85b7bb0b0f2a3f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakerDice1: {fileID: 8399977627455202453}
+  shakerDice2: {fileID: 1074650929}
+  diceDuration: 0.1
 --- !u!1 &346821359
 GameObject:
   m_ObjectHideFlags: 0
@@ -1390,7 +1436,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &794215285
 GameObject:
@@ -1796,7 +1842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399977627106987989, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 8399977627106987989, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1812,6 +1858,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
+--- !u!114 &1074650929 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 923198487698691635, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
+  m_PrefabInstance: {fileID: 1074650928}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6be21132e9c3c54409457eb59198ed7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1133850665
 GameObject:
   m_ObjectHideFlags: 0
@@ -2890,7 +2947,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8399977627106987989, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 8399977627106987989, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -2906,3 +2963,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
+--- !u!114 &8399977627455202453 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 923198487698691635, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
+  m_PrefabInstance: {fileID: 8399977627455202452}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6be21132e9c3c54409457eb59198ed7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

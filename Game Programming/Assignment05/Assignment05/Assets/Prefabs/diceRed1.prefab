@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8399977627106987989}
   - component: {fileID: 8399977627106987988}
   - component: {fileID: 8399977627106987990}
+  - component: {fileID: 923198487698691635}
   m_Layer: 0
   m_Name: diceRed1
   m_TagString: Untagged
@@ -101,3 +102,15 @@ MonoBehaviour:
   side4: {fileID: 21300000, guid: c7a405476f06f5e40a3d6c1a7b577a19, type: 3}
   side5: {fileID: 21300000, guid: ad86122f9cf4233418fbe4ff2d810066, type: 3}
   side6: {fileID: 21300000, guid: 965588f8e00519840b207b32d46eb166, type: 3}
+--- !u!114 &923198487698691635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8399977627106987947}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6be21132e9c3c54409457eb59198ed7a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
