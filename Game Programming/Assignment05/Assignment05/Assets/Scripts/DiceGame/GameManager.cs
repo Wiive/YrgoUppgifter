@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
         roundText.text = "Round: " + round.ToString() + "/" + maxRounds.ToString();
     }
 
+
     public void NewRound()
     {
         if (round < maxRounds)
@@ -50,10 +51,11 @@ public class GameManager : MonoBehaviour
         }      
     }
 
+
     public void UpdateValue()
     {
         currentValue = dice1.GetValue() + dice2.GetValue();
-        diceValue.text = (dice1.GetValue() + dice2.GetValue()).ToString();
+        diceValue.text = currentValue.ToString();
     }
 
 
