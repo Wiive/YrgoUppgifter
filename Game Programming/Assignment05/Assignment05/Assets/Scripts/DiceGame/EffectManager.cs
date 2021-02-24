@@ -7,15 +7,24 @@ public class EffectManager : MonoBehaviour
     [Header("Dice Settings")]
     public Shaker shakerDice1;
     public Shaker shakerDice2;
+    public AudioClip rollDiceSound;
 
     public float diceDuration;
 
-    private void Update()
+    AudioSource audioSource;
+
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            shakerDice1.Shake(diceDuration);
-            shakerDice2.Shake(diceDuration);
-        }
+        audioSource = GetComponent<AudioSource>();
     }
+
+
+    public void RollDiceEffect()
+    {
+        shakerDice1.Shake(diceDuration);
+        shakerDice2.Shake(diceDuration);
+        audioSource.PlayOneShot(rollDiceSound);
+    }
+
+
 }

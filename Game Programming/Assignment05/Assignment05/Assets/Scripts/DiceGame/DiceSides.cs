@@ -21,7 +21,6 @@ public class DiceSides : MonoBehaviour
 
     public void RollTheDie()
     {
-        Sprite[] diceSides = new Sprite[5];
         int newSide = (int)Random.Range(1, 7);
         switch (newSide)
         {

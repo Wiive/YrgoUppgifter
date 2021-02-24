@@ -2,28 +2,33 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
-{  
+{        
     public DiceSides dice1;
     public DiceSides dice2;
     public TMP_Text diceValue;
+    private int currentValue;
+    private int oldValue;
 
     public DicePlayerBehavoir player1;
     public DicePlayerBehavoir player2;
 
-    private int currentValue;
-    private int oldValue;
-
     public TMP_Text roundText;
     public int maxRounds = 20;
     public int round = 0;
-    private bool player1turn;                                        //Use if only one player can go each turn.
+    public UnityEvent newRound;
 
     private int scoreGiven = 500;
 
     private void Start()
-    {               
+    {
+        if (newRound == null)
+        {
+            newRound = new UnityEvent();
+        }
+
         player1.ChangeScoreText(player1.GetScore().ToString());     //Later make playerscore load form json /firebase
         player2.ChangeScoreText(player2.GetScore().ToString());
 
@@ -43,7 +48,8 @@ public class GameManager : MonoBehaviour
             player1.hasGuessed = false;
             player2.hasGuessed = false;
             round++;
-            roundText.text = "Round: "+ round.ToString() + "/" + maxRounds.ToString();
+            roundText.text = "Round: " + round.ToString() + "/" + maxRounds.ToString();
+            newRound.Invoke();
         }
         else
         {

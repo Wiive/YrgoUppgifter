@@ -562,7 +562,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shakerDice1: {fileID: 8399977627455202453}
   shakerDice2: {fileID: 1074650929}
-  diceDuration: 0.1
+  rollDiceSound: {fileID: 8300000, guid: 5ac2098eb3b211e468dee17b5b30dcdf, type: 3}
+  diceDuration: 0.2
 --- !u!82 &346410648
 AudioSource:
   m_ObjectHideFlags: 0
@@ -575,7 +576,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.495
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -693,8 +694,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -46.992}
-  m_SizeDelta: {x: 200, y: 94.03122}
+  m_AnchoredPosition: {x: -0.000023842, y: -46.992}
+  m_SizeDelta: {x: 251.7763, y: 94.03122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &346821361
 MonoBehaviour:
@@ -716,9 +717,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score:
-
-    99999999'
+  m_text: 'Score: 999999'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cdbd4bb876f4d5b458d21fa00eb994f3, type: 2}
   m_sharedMaterial: {fileID: -5260976142527509987, guid: cdbd4bb876f4d5b458d21fa00eb994f3, type: 2}
@@ -1905,6 +1904,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 923198487698691635, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
+      propertyPath: intencity
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 8399977627106987947, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
       propertyPath: m_Name
       value: Dice2
@@ -2760,6 +2763,21 @@ MonoBehaviour:
   roundText: {fileID: 252834449}
   maxRounds: 20
   round: 1
+  newRound:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 346410647}
+        m_TargetAssemblyTypeName: EffectManager, Assembly-CSharp
+        m_MethodName: RollDiceEffect
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1793275442
 GameObject:
   m_ObjectHideFlags: 0
@@ -2889,8 +2907,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -46.992}
-  m_SizeDelta: {x: 200, y: 94.03122}
+  m_AnchoredPosition: {x: -0.000059128, y: -46.992}
+  m_SizeDelta: {x: 251.77637, y: 94.03122}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1990973407
 MonoBehaviour:
@@ -2912,9 +2930,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Score:
-
-    99999999'
+  m_text: 'Score: 999999'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cdbd4bb876f4d5b458d21fa00eb994f3, type: 2}
   m_sharedMaterial: {fileID: -5260976142527509987, guid: cdbd4bb876f4d5b458d21fa00eb994f3, type: 2}
@@ -2998,6 +3014,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 923198487698691635, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
+      propertyPath: intencity
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 8399977627106987947, guid: 72c86dd1ef6d74b40b4c8f14ec25f1b1, type: 3}
       propertyPath: m_Name
       value: Dice1
