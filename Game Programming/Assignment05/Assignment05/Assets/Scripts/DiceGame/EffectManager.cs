@@ -7,9 +7,12 @@ public class EffectManager : MonoBehaviour
     [Header("Dice Settings")]
     public Shaker shakerDice1;
     public Shaker shakerDice2;
+    public float diceDuration;
     public AudioClip rollDiceSound;
 
-    public float diceDuration;
+    [Header("Score Effect")]
+    public AudioClip scoreSound;
+    public float scoreSoundDelay = 0.5f;
 
     AudioSource audioSource;
 
@@ -27,4 +30,17 @@ public class EffectManager : MonoBehaviour
     }
 
 
+    public void ScoreEffect(ParticleSystem particelEffect)
+    {        
+        particelEffect.Play();
+        StartCoroutine(PlaySoundWithDelay(scoreSound, scoreSoundDelay));
+    }
+
+    private IEnumerator PlaySoundWithDelay(AudioClip sound, float delay)
+    {
+        if (audioSource == null)
+            yield break;
+        yield return new WaitForSeconds(delay);
+        audioSource.PlayOneShot(sound);
+    }
 }

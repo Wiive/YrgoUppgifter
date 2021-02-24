@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DicePlayerBehavoir : MonoBehaviour
 {
@@ -11,6 +12,16 @@ public class DicePlayerBehavoir : MonoBehaviour
     public bool playerGuessHiger;
     public bool hasGuessed;
 
+    public UnityEvent getNewScore;
+
+    private void Start()
+    {
+        if(getNewScore == null)
+        {
+            getNewScore = new UnityEvent();
+        }
+    }
+
     public int GetScore()
     {
         return score;
@@ -18,6 +29,7 @@ public class DicePlayerBehavoir : MonoBehaviour
 
     public void UpdateScore(int addToScore)
     {
+        getNewScore.Invoke();
         score += addToScore;
     }
 
