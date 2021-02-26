@@ -121,10 +121,7 @@ public class FirebaseTest : MonoBehaviour
 			accountLoginWarning.text = "";
 			Debug.Log("login completed");
 			levelManager.LoadScene("DiceLobby");
-			ActiveUser.Instance.LoadUserData();
 		}
-
-		//StartCoroutine(DataTest(FirebaseAuth.DefaultInstance.CurrentUser.UserId, "TestWrite"));
 	}
 
 	private IEnumerator DataTest(string userID, string data)

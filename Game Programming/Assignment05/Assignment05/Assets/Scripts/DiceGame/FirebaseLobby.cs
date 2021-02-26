@@ -22,6 +22,7 @@ public class FirebaseLobby : MonoBehaviour
     {              
         userID = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
         db = FirebaseDatabase.DefaultInstance;
+        ActiveUser.Instance.LoadUserData();
         userInfo = ActiveUser.Instance.userInfo;
 
         displayName.text = userInfo.name;
@@ -58,11 +59,14 @@ public class FirebaseLobby : MonoBehaviour
 
     public void CreateGame()
     {
+        Debug.Log("tryin to create game");
         if (displayName.text == "" || userInfo.activeGames.Count > 3)
         {
+            Debug.Log("You got no name?");
             return;
         }
 
+        Debug.Log("Trying to create Game Info for new game");
         var newGameInfo = new GameInfo();
         newGameInfo.displayName = "Game " + newGameInfo.round + "/20";      //Set the game to show how many rounds has gone and of how many
 
@@ -85,6 +89,7 @@ public class FirebaseLobby : MonoBehaviour
 
     public void GameCreated(string gameKey)
     {
+        Debug.Log("Trying to att game to list");
         if (userInfo.activeGames == null)
         {
             userInfo.activeGames = new List<string>();
@@ -98,13 +103,16 @@ public class FirebaseLobby : MonoBehaviour
 
     public void ShowGames(string jsondata)
     {
+        Debug.Log("Trying to Show games");
         var gameInfo = JsonUtility.FromJson<GameInfo>(jsondata);
 
         if (userInfo.activeGames.Contains(gameInfo.gameID) || gameInfo.dicePlayers.Count > 1)
         {
+            Debug.Log("Game is full or player already in that game");
             return;
         }
 
+        Debug.Log("Creating button");
         var newButton = Instantiate(gameButtonPrefab, publicGameList).GetComponent<Button>();
         newButton.GetComponentInChildren<TextMeshProUGUI>().text = gameInfo.displayName;
         newButton.onClick.AddListener(() => JoinGame(gameInfo));
@@ -112,6 +120,7 @@ public class FirebaseLobby : MonoBehaviour
 
     public void JoinGame(GameInfo gameInfo)
     {
+        Debug.Log("Trying to join game");
         userInfo.activeGames.Add(gameInfo.gameID);
 
         string jsondata = JsonUtility.ToJson(userInfo);
