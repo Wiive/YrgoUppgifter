@@ -31,9 +31,6 @@ public class FirebaseTest : MonoBehaviour
 				Debug.LogError(task.Exception);
 			}
 
-
-			//StartCoroutine(SignIn("test2@test.test", "password2"));	SAVE FOR PASSWORD
-			//StartCoroutine(SignIn("test@test.test", "password"));		SAVE FOR PASSWORD
 		});
 		accountLoginWarning.text = "";
 		levelManager = GetComponent<LevelManager>();
@@ -47,18 +44,23 @@ public class FirebaseTest : MonoBehaviour
 		var email = newEmail.text;
 		var password = newPassword.text;
 		var checkPassword = confirmPassword.text;
+		var name = newName.text;
 		if (password != checkPassword)
 		{
-			Debug.Log("passwords not the same");
+			accountLoginWarning.text = "Passwords are not the same";
+		}
+		else if (name == "" || name == null)
+		{
+			accountLoginWarning.text = "Enter a name";
 		}
 		else
 		{
-			StartCoroutine(RegUser(email, password, checkPassword));
+			StartCoroutine(RegUser(email, password, name));
 			HideSignUpCanvas();
 		}			
 	}
 
-	private IEnumerator RegUser(string email, string password, string checkPassword)
+	private IEnumerator RegUser(string email, string password, string name)
 	{
 		Debug.Log("Starting Registration");
 		var auth = FirebaseAuth.DefaultInstance;
@@ -72,6 +74,11 @@ public class FirebaseTest : MonoBehaviour
 		else
 		{
 			Debug.Log("Registration Complete");
+			var userInfo = new UserInfo();
+			userInfo.name = name;
+			string jsondata = JsonUtility.ToJson(userInfo);
+			var db = FirebaseDatabase.DefaultInstance;
+			var dataTask = db.RootReference.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).SetRawJsonValueAsync(jsondata);
 		}
 	}
 
@@ -114,9 +121,10 @@ public class FirebaseTest : MonoBehaviour
 			accountLoginWarning.text = "";
 			Debug.Log("login completed");
 			levelManager.LoadScene("DiceLobby");
+			ActiveUser.Instance.LoadUserData();
 		}
 
-		StartCoroutine(DataTest(FirebaseAuth.DefaultInstance.CurrentUser.UserId, "TestWrite"));
+		//StartCoroutine(DataTest(FirebaseAuth.DefaultInstance.CurrentUser.UserId, "TestWrite"));
 	}
 
 	private IEnumerator DataTest(string userID, string data)

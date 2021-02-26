@@ -19,7 +19,7 @@ public class FirebaseLobby : MonoBehaviour
 
 
     void Start()
-    {
+    {              
         userID = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
         db = FirebaseDatabase.DefaultInstance;
         userInfo = ActiveUser.Instance.userInfo;

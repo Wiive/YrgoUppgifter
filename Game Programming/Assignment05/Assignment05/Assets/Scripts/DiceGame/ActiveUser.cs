@@ -43,8 +43,6 @@ public class ActiveUser : MonoBehaviour
         {
             userInfo = JsonUtility.FromJson<UserInfo>(jsonData);
         }
-
-        //GetComponent<LevelManager>().LoadScene(1);
     }
 
     public void SaveUser()

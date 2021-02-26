@@ -71,7 +71,7 @@ public class SaveManager : MonoBehaviour
     private void SaveToFireBase(string data)
     {
         var db = FirebaseDatabase.DefaultInstance;
-        var dataTask = db.RootReference.Child("users").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).SetRawJsonValueAsync(data);
+        var dataTask = db.RootReference.Child("users/").Child(FirebaseAuth.DefaultInstance.CurrentUser.UserId).SetRawJsonValueAsync(data);
     }
 
     public void LoadData()
