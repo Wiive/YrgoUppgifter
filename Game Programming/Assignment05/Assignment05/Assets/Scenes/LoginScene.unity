@@ -1203,7 +1203,6 @@ GameObject:
   m_Component:
   - component: {fileID: 277610059}
   - component: {fileID: 277610060}
-  - component: {fileID: 277610061}
   m_Layer: 0
   m_Name: CanvasManager
   m_TagString: Untagged
@@ -1245,18 +1244,6 @@ MonoBehaviour:
   newPassword: {fileID: 1530349875}
   confirmPassword: {fileID: 1413360113}
   newName: {fileID: 984791868}
---- !u!114 &277610061
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277610058}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 815b01be55f0093419e49712d969d9f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &281636807
 GameObject:
   m_ObjectHideFlags: 0
@@ -3218,6 +3205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1318469769}
   - component: {fileID: 1318469768}
+  - component: {fileID: 1318469767}
   m_Layer: 0
   m_Name: GameData
   m_TagString: Untagged
@@ -3225,6 +3213,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1318469767
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1318469766}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 815b01be55f0093419e49712d969d9f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1318469768
 MonoBehaviour:
   m_ObjectHideFlags: 0

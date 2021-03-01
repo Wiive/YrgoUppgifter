@@ -22,7 +22,6 @@ public class FirebaseLobby : MonoBehaviour
     {              
         userID = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
         db = FirebaseDatabase.DefaultInstance;
-        ActiveUser.Instance.LoadUserData();
         userInfo = ActiveUser.Instance.userInfo;
 
         displayName.text = userInfo.name;
@@ -60,31 +59,35 @@ public class FirebaseLobby : MonoBehaviour
     public void CreateGame()
     {
         Debug.Log("tryin to create game");
-        if (displayName.text == "" || userInfo.activeGames.Count > 3)
+        if (displayName.text == "" || userInfo.activeGames.Count > 2)
         {
             Debug.Log("You got no name?");
             return;
         }
 
-        Debug.Log("Trying to create Game Info for new game");
-        var newGameInfo = new GameInfo();
-        newGameInfo.displayName = "Game " + newGameInfo.round + "/20";      //Set the game to show how many rounds has gone and of how many
+        else
+        {
+            Debug.Log("Trying to create Game Info for new game");
+            var newGameInfo = new GameInfo();
+            newGameInfo.displayName = "Game " + newGameInfo.round + "/20";      //Set the game to show how many rounds has gone and of how many
 
-        var dicePlayerInfo = new DicePlayerInfo();
-        dicePlayerInfo.displayName = displayName.text;
+            var dicePlayerInfo = new DicePlayerInfo();
+            dicePlayerInfo.displayName = displayName.text;
 
-        newGameInfo.dicePlayers = new List<DicePlayerInfo>();
-        newGameInfo.dicePlayers.Add(dicePlayerInfo);
+            newGameInfo.dicePlayers = new List<DicePlayerInfo>();
+            newGameInfo.dicePlayers.Add(dicePlayerInfo);
 
-        string key = db.RootReference.Child("games/").Push().Key;
-        string path = "games/" + key;
+            string key = db.RootReference.Child("games/").Push().Key;
+            string path = "games/" + key;
 
-        newGameInfo.gameID = key;
-        string jsondata = JsonUtility.ToJson(newGameInfo);
+            newGameInfo.gameID = key;
+            string jsondata = JsonUtility.ToJson(newGameInfo);
 
-        StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
+            StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
 
-        GameCreated(key);
+            GameCreated(key);
+        }
+    
     }
 
     public void GameCreated(string gameKey)
@@ -112,10 +115,14 @@ public class FirebaseLobby : MonoBehaviour
             return;
         }
 
-        Debug.Log("Creating button");
-        var newButton = Instantiate(gameButtonPrefab, publicGameList).GetComponent<Button>();
-        newButton.GetComponentInChildren<TextMeshProUGUI>().text = gameInfo.displayName;
-        newButton.onClick.AddListener(() => JoinGame(gameInfo));
+        else
+        {
+            Debug.Log("Creating button");
+            var newButton = Instantiate(gameButtonPrefab, publicGameList).GetComponent<Button>();
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = gameInfo.displayName;
+            newButton.onClick.AddListener(() => JoinGame(gameInfo));
+        }
+       
     }
 
     public void JoinGame(GameInfo gameInfo)
@@ -131,7 +138,7 @@ public class FirebaseLobby : MonoBehaviour
         dicePlayerInfo.displayName = displayName.text;
         gameInfo.dicePlayers.Add(dicePlayerInfo);
 
-        gameInfo.displayName = gameInfo.dicePlayers[0].displayName + "vs " + dicePlayerInfo.displayName;
+        gameInfo.displayName = gameInfo.dicePlayers[0].displayName + " vs " + dicePlayerInfo.displayName;
 
         jsondata = JsonUtility.ToJson(gameInfo);
 

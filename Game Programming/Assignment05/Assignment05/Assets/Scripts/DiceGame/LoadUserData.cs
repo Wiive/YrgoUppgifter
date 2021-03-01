@@ -6,6 +6,6 @@ public class LoadUserData : MonoBehaviour
 {
   public void LoadUserDataButton()
     {
-        //ActiveUser.Instance.LoadUserData();
+        ActiveUser.Instance.LoadUserData();
     }
 }

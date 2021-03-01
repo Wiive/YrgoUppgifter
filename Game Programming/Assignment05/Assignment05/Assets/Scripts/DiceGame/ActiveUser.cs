@@ -46,6 +46,8 @@ public class ActiveUser : MonoBehaviour
             Debug.Log("Trying to load user from Firebase");
             userInfo = JsonUtility.FromJson<UserInfo>(jsonData);
         }
+
+        GetComponent<LevelManager>().LoadScene("DiceLobby");
     }
 
     public void SaveUser()
