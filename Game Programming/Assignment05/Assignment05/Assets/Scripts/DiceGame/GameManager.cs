@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public DicePlayerBehavoir player1;
     public DicePlayerBehavoir player2;
 
+    public TMP_Text gameStatus;
     public TMP_Text roundText;
     public int maxRounds = 20;
     public int round = 0;
@@ -29,7 +30,7 @@ public class GameManager : MonoBehaviour
             newRound = new UnityEvent();
         }
 
-        player1.ChangeScoreText(player1.GetScore().ToString());     //Later make playerscore load form json /firebase
+        player1.ChangeScoreText(player1.GetScore().ToString());             //Later make playerscore load form json /firebase
         player2.ChangeScoreText(player2.GetScore().ToString());
 
         UpdateValue();

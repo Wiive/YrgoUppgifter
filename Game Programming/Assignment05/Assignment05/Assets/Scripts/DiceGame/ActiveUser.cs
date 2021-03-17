@@ -34,16 +34,13 @@ public class ActiveUser : MonoBehaviour
 
     public void LoadUser(string jsonData)
     {
-        Debug.Log("Starting to try to LoadUser");
         if (jsonData == null || jsonData == "")
         {
-            Debug.Log("user is empty creating new empty user");
             userInfo = new UserInfo();
             SaveUser();          
         }
         else
         {
-            Debug.Log("Trying to load user from Firebase");
             userInfo = JsonUtility.FromJson<UserInfo>(jsonData);
         }
 

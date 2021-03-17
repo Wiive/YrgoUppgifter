@@ -22,11 +22,11 @@ public class ActiveGame : MonoBehaviour
         }
     }
 
-
     public void StartGame(GameInfo gameInfo)
     {
         activeGameInfo = gameInfo;
 
+        Debug.Log("Trying to Start Game: " + gameInfo);
         GetComponent<LevelManager>().LoadScene(2);
     }
 }

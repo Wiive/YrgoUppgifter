@@ -37,7 +37,7 @@ public class FirebaseLobby : MonoBehaviour
 
         foreach (var gameID in userInfo.activeGames)
         {
-            StartCoroutine(FirebaseManager.Instance.LoadData("games/ " + gameID, LoadGameInfo));
+            StartCoroutine(FirebaseManager.Instance.LoadData("games/" + gameID, LoadGameInfo));
         }
     }
 
@@ -60,34 +60,28 @@ public class FirebaseLobby : MonoBehaviour
     {
         Debug.Log("tryin to create game");
         if (displayName.text == "" || userInfo.activeGames.Count > 2)
-        {
-            Debug.Log("You got no name?");
             return;
-        }
+        
 
-        else
-        {
-            Debug.Log("Trying to create Game Info for new game");
-            var newGameInfo = new GameInfo();
-            newGameInfo.displayName = "Game " + newGameInfo.round + "/20";      //Set the game to show how many rounds has gone and of how many
+        Debug.Log("Trying to create Game Info for new game");
+        var newGameInfo = new GameInfo();
+        newGameInfo.displayName = "Game " + newGameInfo.round + "/20";      //Set the game to show how many rounds has gone and of how many
 
-            var dicePlayerInfo = new DicePlayerInfo();
-            dicePlayerInfo.displayName = displayName.text;
+        var dicePlayerInfo = new DicePlayerInfo();
+        dicePlayerInfo.displayName = displayName.text;
 
-            newGameInfo.dicePlayers = new List<DicePlayerInfo>();
-            newGameInfo.dicePlayers.Add(dicePlayerInfo);
+        newGameInfo.dicePlayers = new List<DicePlayerInfo>();
+        newGameInfo.dicePlayers.Add(dicePlayerInfo);
 
-            string key = db.RootReference.Child("games/").Push().Key;
-            string path = "games/" + key;
+        string key = db.RootReference.Child("games/").Push().Key;
+        string path = "games/" + key;
 
-            newGameInfo.gameID = key;
-            string jsondata = JsonUtility.ToJson(newGameInfo);
+        newGameInfo.gameID = key;
+        string jsondata = JsonUtility.ToJson(newGameInfo);
 
-            StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
+        StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
 
-            GameCreated(key);
-        }
-    
+        GameCreated(key);          
     }
 
     public void GameCreated(string gameKey)
@@ -101,6 +95,18 @@ public class FirebaseLobby : MonoBehaviour
 
         string jsondata = JsonUtility.ToJson(userInfo);
 
+        StartCoroutine(FirebaseManager.Instance.SaveData("users/" + userID, jsondata, UpdateGameList));
+    }
+
+    public void ListGames()
+    {
+        Debug.Log("Listing Games");
+
+        //Remove the old list
+        foreach (Transform child in publicGameList)
+            GameObject.Destroy(child.gameObject);
+
+        //Load games and create a new list
         StartCoroutine(FirebaseManager.Instance.LoadDataMultiple("games/", ShowGames));
     }
 
@@ -115,13 +121,10 @@ public class FirebaseLobby : MonoBehaviour
             return;
         }
 
-        else
-        {
-            Debug.Log("Creating button");
-            var newButton = Instantiate(gameButtonPrefab, publicGameList).GetComponent<Button>();
-            newButton.GetComponentInChildren<TextMeshProUGUI>().text = gameInfo.displayName;
-            newButton.onClick.AddListener(() => JoinGame(gameInfo));
-        }
+        Debug.Log("Creating button");
+        var newButton = Instantiate(gameButtonPrefab, publicGameList).GetComponent<Button>();
+        newButton.GetComponentInChildren<TextMeshProUGUI>().text = gameInfo.displayName;
+        newButton.onClick.AddListener(() => JoinGame(gameInfo));   
        
     }
 
