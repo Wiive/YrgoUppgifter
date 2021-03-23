@@ -7,7 +7,7 @@ using UnityEngine.Events;
 public class DicePlayerBehavoir : MonoBehaviour
 {
     public int score;
-    public string inGameName;
+    public TMP_Text inGameName;
     public TMP_Text scoreText;
     public bool playerGuessHiger;
     public bool hasGuessed;

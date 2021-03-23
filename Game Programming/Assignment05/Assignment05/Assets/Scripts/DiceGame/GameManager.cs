@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
 
     private int scoreGiven = 500;
 
+    GameInfo gameInfo;
+
     private void Start()
     {
         if (newRound == null)
@@ -30,7 +32,16 @@ public class GameManager : MonoBehaviour
             newRound = new UnityEvent();
         }
 
-        player1.ChangeScoreText(player1.GetScore().ToString());             //Later make playerscore load form json /firebase
+        //Start with values from that activeGameInfo
+        gameInfo = ActiveGame.Instance.activeGameInfo;
+        round = gameInfo.round;
+       
+        //Load Dice Players Info
+        player1.inGameName.text = gameInfo.dicePlayers[0].displayName;
+        player2.inGameName.text = gameInfo.dicePlayers[1].displayName;
+        player1.score = gameInfo.dicePlayers[0].score;
+        player2.score = gameInfo.dicePlayers[1].score;
+        player1.ChangeScoreText(player1.GetScore().ToString());
         player2.ChangeScoreText(player2.GetScore().ToString());
 
         UpdateValue();
@@ -51,6 +62,7 @@ public class GameManager : MonoBehaviour
             round++;
             roundText.text = "Round: " + round.ToString() + "/" + maxRounds.ToString();
             newRound.Invoke();
+            //Save to data base
         }
         else
         {
