@@ -8,12 +8,17 @@ using TMPro;
 
 public class FirebaseLobby : MonoBehaviour
 {
+    [Header("User Setup")]
     public TMP_Text displayName;
     public TMP_Text victories;
+    public Image avatar;
+    public List<Sprite> avatarSprite;
 
+    [Header("Game Setup")]
     public Transform myGameListPanel;
     public Transform publicGameList;
     public GameObject gameButtonPrefab;
+
 
     string userID;
     UserInfo userInfo;
@@ -24,10 +29,12 @@ public class FirebaseLobby : MonoBehaviour
     {              
         userID = FirebaseAuth.DefaultInstance.CurrentUser.UserId;
         db = FirebaseDatabase.DefaultInstance;
-        userInfo = ActiveUser.Instance.userInfo;
+        userInfo = ActiveUser.Instance.userInfo;        
 
         displayName.text = userInfo.name;
         victories.text = "Victories: " + userInfo.victories.ToString();
+        avatar.sprite = avatarSprite[userInfo.sprite];
+
         UpdateGameList();
     }
 
@@ -159,5 +166,6 @@ public class FirebaseLobby : MonoBehaviour
         auth.SignOut();
         ActiveUser.Instance.userID = null;
         ActiveUser.Instance.userInfo = null;
+        ActiveGame.Instance.activeGameInfo = null;
     }
 }

@@ -24,7 +24,7 @@ public class DicePlayerInfo
 public class UserInfo
 {
     public string name;
-    public string sprite;
+    public int sprite;
     public List<string> activeGames;
     public int victories;
 }

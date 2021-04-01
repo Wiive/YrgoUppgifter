@@ -8,32 +8,41 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
-{        
+{
+    [Header("Dice")]
     public DiceSides dice1;
     public DiceSides dice2;
     public TMP_Text diceValue;
     private int currentValue;
     private int oldValue;
 
+    [Header("Players")]
     public DicePlayerBehavoir player1;
     public DicePlayerBehavoir player2;
     public CanvasGroup player1up;
     public CanvasGroup player1down;
     public CanvasGroup player2up;
     public CanvasGroup player2down;
+
+
+
+    private DicePlayerBehavoir currentPlayer;
+    private DicePlayerBehavoir otherPlayer;
+
+    [Header("Game Status")]
     public TMP_Text roundText;
     public int maxRounds = 20;
+    private int scoreGiven = 500;
     public int round = 0;
-    public bool gameEnded;
+    private bool gameEnded;
+    public enum PlayerStatus { guessing, waiting }
+    public PlayerStatus currentStatus;
+    public TMP_Text gameStatusText;
     public UnityEvent newRound;
 
-    public TMP_Text gameStatusText;
-    public enum PlayerStatus { guessing, waiting}
-    public PlayerStatus currentStatus;
-    public DicePlayerBehavoir currentPlayer;
-    public DicePlayerBehavoir otherPlayer;
+   
 
-    private int scoreGiven = 500;
+    
 
     GameInfo gameInfo;
 
