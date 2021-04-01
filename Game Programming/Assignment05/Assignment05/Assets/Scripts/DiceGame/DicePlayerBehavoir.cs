@@ -13,12 +13,18 @@ public class DicePlayerBehavoir : MonoBehaviour
     public bool hasGuessed;
 
     public UnityEvent getNewScore;
+    public UnityEvent hasGuessedEvent;
 
     private void Start()
     {
         if(getNewScore == null)
         {
             getNewScore = new UnityEvent();
+        }
+
+        if (hasGuessedEvent == null)
+        {
+            hasGuessedEvent = new UnityEvent();
         }
     }
 
@@ -50,7 +56,8 @@ public class DicePlayerBehavoir : MonoBehaviour
             {
                 playerGuessHiger = false;
             }
-            hasGuessed = true;           
+            hasGuessed = true;
+            hasGuessedEvent.Invoke();
         }
         else
         {

@@ -13,9 +13,11 @@ public class OurDicePlayers
 public class DicePlayerInfo
 {
     public string userID;
-    public string status;
-    public int score;
     public string displayName;
+    public bool hasGussed;
+    public bool guessedHigher;
+    public int score;
+
 }
 
 [Serializable]
@@ -31,8 +33,10 @@ public class UserInfo
 [Serializable]
 public class GameInfo
 {
-    public string displayName;
     public string gameID;
+    public string displayName;
+    public int dice1;
+    public int dice2;
     public int round;
     public int numberOfPlayers = 2;
     public List<DicePlayerInfo> dicePlayers;

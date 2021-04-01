@@ -16,13 +16,45 @@ public class DiceSides : MonoBehaviour
     private void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-        RollTheDie();
+        //RollTheDie();
     }
 
     public void RollTheDie()
     {
         int newSide = (int)Random.Range(1, 7);
+        //Make a seed so both players gets the same numbers
         switch (newSide)
+        {
+            case 1:
+                spriteRenderer.sprite = side1;
+                SetValue(1);
+                break;
+            case 2:
+                spriteRenderer.sprite = side2;
+                SetValue(2);
+                break;
+            case 3:
+                spriteRenderer.sprite = side3;
+                SetValue(3);
+                break;
+            case 4:
+                spriteRenderer.sprite = side4;
+                SetValue(4);
+                break;
+            case 5:
+                spriteRenderer.sprite = side5;
+                SetValue(5);
+                break;
+            case 6:
+                spriteRenderer.sprite = side6;
+                SetValue(6);
+                break;
+        }
+    }
+
+    public void SetTheDice(int side)
+    {
+        switch (side)
         {
             case 1:
                 spriteRenderer.sprite = side1;

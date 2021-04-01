@@ -1045,7 +1045,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8456a68fb3b936b4b8f68fc63bc8261a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  displayName: {fileID: 667065401}
+  displayName: {fileID: 689716685}
+  victories: {fileID: 667065401}
   myGameListPanel: {fileID: 52162636}
   publicGameList: {fileID: 102102735}
   gameButtonPrefab: {fileID: 5247525431800252632, guid: 8078d84ca35b51b49b5f38bd710b10a9, type: 3}
@@ -1948,7 +1949,7 @@ GameObject:
   - component: {fileID: 667065402}
   - component: {fileID: 667065401}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: Victories
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1993,9 +1994,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Name:
-
-    Wins:'
+  m_text: 'Victories: '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cdbd4bb876f4d5b458d21fa00eb994f3, type: 2}
   m_sharedMaterial: {fileID: -5260976142527509987, guid: cdbd4bb876f4d5b458d21fa00eb994f3, type: 2}
@@ -2084,7 +2083,7 @@ GameObject:
   - component: {fileID: 689716686}
   - component: {fileID: 689716685}
   m_Layer: 5
-  m_Name: Titel
+  m_Name: DisplayName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2129,7 +2128,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You
+  m_text: DisplayName
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: cdbd4bb876f4d5b458d21fa00eb994f3, type: 2}
   m_sharedMaterial: {fileID: -5260976142527509987, guid: cdbd4bb876f4d5b458d21fa00eb994f3, type: 2}
@@ -2292,6 +2291,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: LevelManager, Assembly-CSharp
         m_MethodName: LoadScene
         m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 277610060}
+        m_TargetAssemblyTypeName: FirebaseLobby, Assembly-CSharp
+        m_MethodName: LogOut
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4370,8 +4381,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   activeGameInfo:
-    displayName: 
     gameID: 
+    displayName: 
+    dice1: 0
+    dice2: 0
     round: 0
     numberOfPlayers: 2
     dicePlayers: []

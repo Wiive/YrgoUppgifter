@@ -9,6 +9,8 @@ using TMPro;
 public class FirebaseLobby : MonoBehaviour
 {
     public TMP_Text displayName;
+    public TMP_Text victories;
+
     public Transform myGameListPanel;
     public Transform publicGameList;
     public GameObject gameButtonPrefab;
@@ -25,6 +27,7 @@ public class FirebaseLobby : MonoBehaviour
         userInfo = ActiveUser.Instance.userInfo;
 
         displayName.text = userInfo.name;
+        victories.text = "Victories: " + userInfo.victories.ToString();
         UpdateGameList();
     }
 
@@ -68,6 +71,7 @@ public class FirebaseLobby : MonoBehaviour
         newGameInfo.displayName = "Game " + newGameInfo.round + "/20";      //Set the game to show how many rounds has gone and of how many
 
         var dicePlayerInfo = new DicePlayerInfo();
+        dicePlayerInfo.userID = ActiveUser.Instance.userID;
         dicePlayerInfo.displayName = displayName.text;
 
         newGameInfo.dicePlayers = new List<DicePlayerInfo>();
@@ -139,6 +143,7 @@ public class FirebaseLobby : MonoBehaviour
 
         var dicePlayerInfo = new DicePlayerInfo();
         dicePlayerInfo.displayName = displayName.text;
+        dicePlayerInfo.userID = ActiveUser.Instance.userID;
         gameInfo.dicePlayers.Add(dicePlayerInfo);
 
         gameInfo.displayName = gameInfo.dicePlayers[0].displayName + " vs " + dicePlayerInfo.displayName;
@@ -146,5 +151,13 @@ public class FirebaseLobby : MonoBehaviour
         jsondata = JsonUtility.ToJson(gameInfo);
 
         StartCoroutine(FirebaseManager.Instance.SaveData("games/" + gameInfo.gameID, jsondata));
+    }
+
+    public void LogOut()
+    {
+        var auth = FirebaseAuth.DefaultInstance;
+        auth.SignOut();
+        ActiveUser.Instance.userID = null;
+        ActiveUser.Instance.userInfo = null;
     }
 }
