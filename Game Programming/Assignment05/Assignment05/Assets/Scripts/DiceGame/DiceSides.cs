@@ -19,8 +19,9 @@ public class DiceSides : MonoBehaviour
         //RollTheDie();
     }
 
-    public void RollTheDie()
+    public void RollTheDie(int seed)
     {
+        Random.InitState(seed);
         int newSide = (int)Random.Range(1, 7);
         //Make a seed so both players gets the same numbers
         switch (newSide)

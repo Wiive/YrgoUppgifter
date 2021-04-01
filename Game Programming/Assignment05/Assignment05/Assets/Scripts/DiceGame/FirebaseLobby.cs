@@ -84,6 +84,12 @@ public class FirebaseLobby : MonoBehaviour
         newGameInfo.dicePlayers = new List<DicePlayerInfo>();
         newGameInfo.dicePlayers.Add(dicePlayerInfo);
 
+        //Create seed for first dice rolls
+        int seed1 = Random.Range(0, 100);
+        int seed2 = Random.Range(0, 100);
+        newGameInfo.dice1 = seed1;
+        newGameInfo.dice2 = seed2;
+
         string key = db.RootReference.Child("games/").Push().Key;
         string path = "games/" + key;
 

@@ -1,5 +1,4 @@
 ﻿using Firebase.Database;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -49,15 +48,20 @@ public class GameManager : MonoBehaviour
             newRound = new UnityEvent();
         }
 
-        if (round == 0)
-        {
-            dice1.RollTheDie();
-            dice2.RollTheDie();
-        }
-
         //Start with values from that activeGameInfo
         gameInfo = ActiveGame.Instance.activeGameInfo;
         round = gameInfo.round;
+
+
+        //if (round == 0)
+        //{
+        //    dice1.RollTheDie(gameInfo.dice1);
+        //    dice2.RollTheDie(gameInfo.dice2);
+        //}
+        dice1.RollTheDie(gameInfo.dice1);
+        dice2.RollTheDie(gameInfo.dice2);
+
+
        
         //Load Dice Players Info
         player1.inGameName.text = gameInfo.dicePlayers[0].displayName;
@@ -81,8 +85,8 @@ public class GameManager : MonoBehaviour
         {
             if (player1.hasGuessed && player2.hasGuessed)
             {
-                dice1.RollTheDie();
-                dice2.RollTheDie();
+                dice1.RollTheDie(gameInfo.dice1);
+                dice2.RollTheDie(gameInfo.dice2);
                 NewRound();
             }      
         }
@@ -209,8 +213,10 @@ public class GameManager : MonoBehaviour
         gameInfo.dicePlayers[0].hasGussed = player1.hasGuessed;
         gameInfo.dicePlayers[1].hasGussed = player2.hasGuessed;
         //Dice seeds
-        //gameInfo.dice1 = randoms
-        //gameInfo.dice2 = randoms
+        int seed1 = Random.Range(0, 100);
+        int seed2 = Random.Range(0, 100);
+        gameInfo.dice1 = seed1;
+        gameInfo.dice2 = seed2;
 
         string path = "games/" + gameInfo.gameID;
         string jsondata = JsonUtility.ToJson(gameInfo);
@@ -256,8 +262,12 @@ public class GameManager : MonoBehaviour
 
     private void ReRollDices()
     {
-        dice1.RollTheDie();
-        dice2.RollTheDie();
+        int seed1 = Random.Range(0, 100);
+        int seed2 = Random.Range(0, 100);
+        gameInfo.dice1 = seed1;
+        gameInfo.dice2 = seed2;
+        dice1.RollTheDie(gameInfo.dice1);
+        dice2.RollTheDie(gameInfo.dice2);
         UpdateValue();
     }
 
