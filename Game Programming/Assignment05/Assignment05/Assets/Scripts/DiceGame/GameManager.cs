@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     public DiceSides dice1;
     public DiceSides dice2;
     public TMP_Text diceValue;
+
     private int currentValue;
     private int oldValue;
 
@@ -24,29 +25,22 @@ public class GameManager : MonoBehaviour
     public CanvasGroup player2up;
     public CanvasGroup player2down;
 
-
-
     private DicePlayerBehavoir currentPlayer;
     private DicePlayerBehavoir otherPlayer;
 
     [Header("Game Status")]
     public TMP_Text roundText;
-    public int maxRounds = 20;
-    private int scoreGiven = 500;
     public int round = 0;
+    public int maxRounds = 20;
+
+    private int scoreGiven = 500; 
     private bool gameEnded;
     public enum PlayerStatus { guessing, waiting }
     public PlayerStatus currentStatus;
     public TMP_Text gameStatusText;
     public UnityEvent newRound;
 
-   
-
-    
-
     GameInfo gameInfo;
-
-    FirebaseDatabase db;
 
     private void Start()
     {
@@ -60,8 +54,6 @@ public class GameManager : MonoBehaviour
             dice1.RollTheDie();
             dice2.RollTheDie();
         }
-
-        db = FirebaseDatabase.DefaultInstance;
 
         //Start with values from that activeGameInfo
         gameInfo = ActiveGame.Instance.activeGameInfo;
@@ -184,13 +176,13 @@ public class GameManager : MonoBehaviour
         this.gameInfo = gameInfo;
         if (currentPlayer == player1)
         {
-            player2.playerGuessHiger = gameInfo.dicePlayers[0].guessedHigher;
-            player2.hasGuessed = gameInfo.dicePlayers[0].hasGussed;
+            player2.playerGuessHiger = gameInfo.dicePlayers[1].guessedHigher;
+            player2.hasGuessed = gameInfo.dicePlayers[1].hasGussed;
         }
         else
         {
-            player1.playerGuessHiger = gameInfo.dicePlayers[1].guessedHigher;
-            player1.hasGuessed = gameInfo.dicePlayers[1].hasGussed;
+            player1.playerGuessHiger = gameInfo.dicePlayers[0].guessedHigher;
+            player1.hasGuessed = gameInfo.dicePlayers[0].hasGussed;
         }
     }
 
@@ -206,8 +198,7 @@ public class GameManager : MonoBehaviour
         round++;
         roundText.text = "Round: " + round.ToString() + "/" + maxRounds.ToString();
         newRound.Invoke();
-        UpdateRoundOnline();
-        
+        UpdateRoundOnline();       
     }
 
     public void UpdateRoundOnline()
@@ -215,7 +206,8 @@ public class GameManager : MonoBehaviour
         gameInfo.round = round;
         gameInfo.dicePlayers[0].score = player1.score;
         gameInfo.dicePlayers[1].score = player2.score;
-
+        gameInfo.dicePlayers[0].hasGussed = player1.hasGuessed;
+        gameInfo.dicePlayers[1].hasGussed = player2.hasGuessed;
         //Dice seeds
         //gameInfo.dice1 = randoms
         //gameInfo.dice2 = randoms
