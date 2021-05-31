@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Status")]
     public TMP_Text roundText;
     public int round = 0;
-    public int maxRounds = 20;
+    public int maxRounds = 15;
 
     private int scoreGiven = 500; 
     private bool gameEnded;

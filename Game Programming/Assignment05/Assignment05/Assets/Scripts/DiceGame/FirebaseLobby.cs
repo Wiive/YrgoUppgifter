@@ -13,12 +13,18 @@ public class FirebaseLobby : MonoBehaviour
     public TMP_Text victories;
     public Image avatar;
     public List<Sprite> avatarSprite;
+    private int currentSprite;
 
     [Header("Game Setup")]
     public Transform myGameListPanel;
     public Transform publicGameList;
     public GameObject gameButtonPrefab;
 
+    [Header("Edit Player Info")]
+    public TMP_InputField newDisplayName;
+    public Image newAvatar;
+    public Button leftArrow;
+    public Button rightArrow;
 
     string userID;
     UserInfo userInfo;
@@ -33,7 +39,8 @@ public class FirebaseLobby : MonoBehaviour
 
         displayName.text = userInfo.name;
         victories.text = "Victories: " + userInfo.victories.ToString();
-        avatar.sprite = avatarSprite[userInfo.sprite];
+        currentSprite = userInfo.sprite;
+        avatar.sprite = avatarSprite[currentSprite];
 
         UpdateGameList();
     }
@@ -60,9 +67,62 @@ public class FirebaseLobby : MonoBehaviour
         newButton.onClick.AddListener(() => ActiveGame.Instance.StartGame(gameInfo));
     }
 
-    public void SetName()
+    public void ShowPlayerEditPanel()
     {
-        userInfo.name = displayName.text;
+        newAvatar.sprite = avatarSprite[currentSprite];
+        if (currentSprite == 0)
+        {
+            leftArrow.interactable = false;
+        }
+        if (currentSprite == 2)
+        {
+            rightArrow.interactable = false;
+        }
+    }
+
+    public void SetNewName()
+    {
+        userInfo.name = newDisplayName.text;
+        displayName.text = newDisplayName.text;
+        StartCoroutine(FirebaseManager.Instance.SaveData("users/" + userID, JsonUtility.ToJson(userInfo)));
+    }
+
+    public void ChangeAvatar(string direction)
+    {
+        if (direction == "left")
+        {
+            currentSprite--;
+            newAvatar.sprite = avatarSprite[currentSprite];
+        }
+        
+        if (direction == "right")
+        {
+            currentSprite++;
+            newAvatar.sprite = avatarSprite[currentSprite];
+        }
+
+
+        if (currentSprite == 0)
+        {
+            leftArrow.interactable = false;
+        }
+        else if (currentSprite == 2)
+        {
+            rightArrow.interactable = false;
+        }
+        else
+        {
+            rightArrow.interactable = true;
+            leftArrow.interactable = true;
+        }
+
+        Debug.Log("Trying to change Avatar. Current sprite is: " + currentSprite);
+    }
+
+    public void SetNewAvatar()
+    {
+        userInfo.sprite = currentSprite;
+        avatar.sprite = newAvatar.sprite;
         StartCoroutine(FirebaseManager.Instance.SaveData("users/" + userID, JsonUtility.ToJson(userInfo)));
     }
 
