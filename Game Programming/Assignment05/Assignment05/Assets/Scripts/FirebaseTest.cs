@@ -120,6 +120,7 @@ public class FirebaseTest : MonoBehaviour
 		{
 			accountLoginWarning.text = "";
 			Debug.Log("login completed");
+			ActiveUser.Instance.LoadUserData();
 		}
 	}
 

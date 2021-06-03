@@ -33,7 +33,7 @@ public class Shaker : MonoBehaviour
         }
     }
 
-    IEnumerator DoShake()
+    private IEnumerator DoShake()
     {
         isShaking = true;
 

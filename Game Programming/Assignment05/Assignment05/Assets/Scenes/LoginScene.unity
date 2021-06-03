@@ -3239,7 +3239,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userInfo:
     name: 
-    sprite: 
+    sprite: 0
     activeGames: []
     victories: 0
   userID: 
@@ -5290,18 +5290,6 @@ MonoBehaviour:
       - m_Target: {fileID: 277610060}
         m_TargetAssemblyTypeName: FirebaseTest, Assembly-CSharp
         m_MethodName: TryToSignIn
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 2020381271}
-        m_TargetAssemblyTypeName: LoadUserData, Assembly-CSharp
-        m_MethodName: LoadUserDataButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

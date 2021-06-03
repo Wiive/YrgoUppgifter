@@ -256,7 +256,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   userInfo:
     name: 
-    sprite: 
+    sprite: 0
     activeGames: []
     victories: 0
   userID: 
@@ -681,7 +681,7 @@ MonoBehaviour:
     displayName: 
     dice1: 0
     dice2: 0
-    round: 15
+    round: 0
     numberOfPlayers: 2
     dicePlayers:
     - userID: 
@@ -689,11 +689,13 @@ MonoBehaviour:
       hasGussed: 0
       guessedHigher: 0
       score: 0
+      spriteIndex: 0
     - userID: 
       displayName: Mikael
       hasGussed: 0
       guessedHigher: 0
       score: 0
+      spriteIndex: 0
 --- !u!4 &335440948
 Transform:
   m_ObjectHideFlags: 0
@@ -1377,6 +1379,7 @@ GameObject:
   - component: {fileID: 595041274}
   - component: {fileID: 595041273}
   - component: {fileID: 595041275}
+  - component: {fileID: 595041276}
   m_Layer: 5
   m_Name: Player2
   m_TagString: Untagged
@@ -1492,7 +1495,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1768956830}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: UpdateStatusText
+        m_MethodName: UpdateStatusTextGuessed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1502,6 +1505,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &595041276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 595041271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea842decaea48ba49a4707a922d26fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSprite: {fileID: 755055336}
+  avatarSprite:
+  - {fileID: 5853961692264606560, guid: 44a0d18243ed8044a92177e47c5ff552, type: 3}
+  - {fileID: 7250496915257733121, guid: 44a0d18243ed8044a92177e47c5ff552, type: 3}
+  - {fileID: 8933873252301888022, guid: 44a0d18243ed8044a92177e47c5ff552, type: 3}
 --- !u!1 &606825956
 GameObject:
   m_ObjectHideFlags: 0
@@ -3062,8 +3082,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 77.283, y: -35}
-  m_SizeDelta: {x: 93.65723, y: 30}
+  m_AnchoredPosition: {x: 78.2, y: -35}
+  m_SizeDelta: {x: 92.41875, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1607103136
 MonoBehaviour:
@@ -3480,9 +3500,10 @@ MonoBehaviour:
   player2up: {fileID: 498342082}
   player2down: {fileID: 469154520}
   roundText: {fileID: 252834449}
-  maxRounds: 20
   round: 1
-  gameEnded: 0
+  maxRounds: 15
+  currentStatus: 0
+  gameStatusText: {fileID: 1559870724}
   newRound:
     m_PersistentCalls:
       m_Calls:
@@ -3498,9 +3519,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-  gameStatusText: {fileID: 1559870724}
-  currentStatus: 0
-  currentPlayer: {fileID: 0}
 --- !u!114 &1768956831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3525,6 +3543,7 @@ GameObject:
   - component: {fileID: 1793275445}
   - component: {fileID: 1793275444}
   - component: {fileID: 1793275446}
+  - component: {fileID: 1793275447}
   m_Layer: 5
   m_Name: Player1
   m_TagString: Untagged
@@ -3640,7 +3659,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1768956830}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
-        m_MethodName: UpdateStatusText
+        m_MethodName: UpdateStatusTextGuessed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3650,6 +3669,23 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &1793275447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1793275442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea842decaea48ba49a4707a922d26fa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerSprite: {fileID: 620703454}
+  avatarSprite:
+  - {fileID: 5853961692264606560, guid: 44a0d18243ed8044a92177e47c5ff552, type: 3}
+  - {fileID: 7250496915257733121, guid: 44a0d18243ed8044a92177e47c5ff552, type: 3}
+  - {fileID: 8933873252301888022, guid: 44a0d18243ed8044a92177e47c5ff552, type: 3}
 --- !u!1 &1990973405
 GameObject:
   m_ObjectHideFlags: 0

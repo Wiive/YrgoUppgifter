@@ -17,6 +17,7 @@ public class DicePlayerInfo
     public bool hasGussed;
     public bool guessedHigher;
     public int score;
+    public int spriteIndex;
 
 }
 

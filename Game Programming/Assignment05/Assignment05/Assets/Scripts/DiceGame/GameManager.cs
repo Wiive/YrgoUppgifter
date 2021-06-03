@@ -34,12 +34,12 @@ public class GameManager : MonoBehaviour
 
     private int scoreGiven = 500; 
     private bool gameEnded;
-    public enum PlayerStatus { guessing, waiting }
+    public enum PlayerStatus { guessing, waiting, win, lose, draw }
     public PlayerStatus currentStatus;
     public TMP_Text gameStatusText;
     public UnityEvent newRound;
 
-    GameInfo gameInfo;
+    private GameInfo gameInfo;
 
     private void Start()
     {
@@ -52,16 +52,8 @@ public class GameManager : MonoBehaviour
         gameInfo = ActiveGame.Instance.activeGameInfo;
         round = gameInfo.round;
 
-
-        //if (round == 0)
-        //{
-        //    dice1.RollTheDie(gameInfo.dice1);
-        //    dice2.RollTheDie(gameInfo.dice2);
-        //}
         dice1.RollTheDie(gameInfo.dice1);
         dice2.RollTheDie(gameInfo.dice2);
-
-
        
         //Load Dice Players Info
         player1.inGameName.text = gameInfo.dicePlayers[0].displayName;
@@ -70,12 +62,24 @@ public class GameManager : MonoBehaviour
         player2.score = gameInfo.dicePlayers[1].score;
         player1.ChangeScoreText(player1.GetScore().ToString());
         player2.ChangeScoreText(player2.GetScore().ToString());
+        player1.GetComponent<SetSprite>().UpdateSprite(gameInfo.dicePlayers[0].spriteIndex);
+        player2.GetComponent<SetSprite>().UpdateSprite(gameInfo.dicePlayers[1].spriteIndex);
+
 
         UpdateValue();
         oldValue = currentValue;
         roundText.text = "Round: " + round.ToString() + "/" + maxRounds.ToString();
 
         UpdateDicePlayerToActivePlayer();
+
+        if (!currentPlayer.hasGuessed && !otherPlayer.hasGuessed)
+        {
+            currentStatus = PlayerStatus.guessing;
+        }
+        else if (currentPlayer.hasGuessed)
+        {
+            currentStatus = PlayerStatus.waiting;
+        }
     }
 
 
@@ -124,9 +128,9 @@ public class GameManager : MonoBehaviour
     }
 
 
-    public void UpdateStatusText()
+    public void UpdateStatusTextGuessed()
     {
-        if (player1.hasGuessed && player2.hasGuessed)
+        if (!currentPlayer.hasGuessed && !otherPlayer.hasGuessed)
         {
             currentStatus = PlayerStatus.guessing;
         }
@@ -134,6 +138,11 @@ public class GameManager : MonoBehaviour
         {
             currentStatus = PlayerStatus.waiting;
         }
+        ChangeStatusText();
+    }
+
+    private void ChangeStatusText()
+    {
         switch (currentStatus)
         {
             case PlayerStatus.waiting:
@@ -143,26 +152,44 @@ public class GameManager : MonoBehaviour
             case PlayerStatus.guessing:
                 gameStatusText.text = "Guess higher or lower";
                 break;
+
+            case PlayerStatus.win:
+                gameStatusText.text = "GZ! YOU WON!";
+                break;
+
+            case PlayerStatus.lose:
+                gameStatusText.text = "aww... you didn't make it this time.";
+                break;
+
+            case PlayerStatus.draw:
+                gameStatusText.text = "You made a draw!";
+                break;
         }
     }
 
 
     public void UpdateGuessOnline()
     {
+        string player = "/dicePlayers/";
+        int i;
         if (currentPlayer == player1)
         {
             gameInfo.dicePlayers[0].guessedHigher = currentPlayer.playerGuessHiger;
             gameInfo.dicePlayers[0].hasGussed = currentPlayer.hasGuessed;
-
-
+            player += 0;
+            i = 0;
         }
         else
         {
             gameInfo.dicePlayers[1].guessedHigher = currentPlayer.playerGuessHiger;
             gameInfo.dicePlayers[1].hasGussed = currentPlayer.hasGuessed;
+            player += 1;
+            i = 1;
         }
-        string path = "games/" + gameInfo.gameID;
-        string jsondata = JsonUtility.ToJson(gameInfo);
+
+        RefreshFromOnline();
+        string path = "games/" + gameInfo.gameID + player;
+        string jsondata = JsonUtility.ToJson(gameInfo.dicePlayers[i]);
         StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
         ActiveGame.Instance.activeGameInfo = gameInfo;
     }
@@ -178,6 +205,7 @@ public class GameManager : MonoBehaviour
         var gameInfo = JsonUtility.FromJson<GameInfo>(jsondata);
         ActiveGame.Instance.activeGameInfo = gameInfo;
         this.gameInfo = gameInfo;
+        Debug.Log("Loading gusses from online");
         if (currentPlayer == player1)
         {
             player2.playerGuessHiger = gameInfo.dicePlayers[1].guessedHigher;
@@ -197,6 +225,7 @@ public class GameManager : MonoBehaviour
         UpdateValue();
         CalculateScores();
         oldValue = currentValue;
+        Debug.Log("Start a new round, set player hasGussed to false");
         player1.hasGuessed = false;
         player2.hasGuessed = false;
         round++;
@@ -262,6 +291,7 @@ public class GameManager : MonoBehaviour
 
     private void ReRollDices()
     {
+        Debug.Log("Rerolling");
         int seed1 = Random.Range(0, 100);
         int seed2 = Random.Range(0, 100);
         gameInfo.dice1 = seed1;
@@ -269,6 +299,11 @@ public class GameManager : MonoBehaviour
         dice1.RollTheDie(gameInfo.dice1);
         dice2.RollTheDie(gameInfo.dice2);
         UpdateValue();
+
+        string path = "games/" + gameInfo.gameID;
+        string jsondata = JsonUtility.ToJson(gameInfo);
+        StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
+        ActiveGame.Instance.activeGameInfo = gameInfo;
     }
 
 
@@ -291,16 +326,22 @@ public class GameManager : MonoBehaviour
         if (currentPlayer.score > otherPlayer.score)
         {
             Debug.Log("You WON!");
+            currentStatus = PlayerStatus.win;
+            ChangeStatusText();
             activeUser.victories++;
             
         }
         else if (currentPlayer.score < otherPlayer.score)
         {
             Debug.Log("You lost");
+            currentStatus = PlayerStatus.lose;
+            ChangeStatusText();
         }
         else
         {
             Debug.Log("It's a draw");
+            currentStatus = PlayerStatus.draw;
+            ChangeStatusText();
         }
 
         //Remove game for user
@@ -312,13 +353,15 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        //Remove game online?
+
+
         //Save online
         string path = "users/" + activeUser;
         string jsondata = JsonUtility.ToJson(activeUser);
         Debug.Log("Saving winner to database");
         StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
 
-        GetComponent<LevelManager>().LoadScene(1);
         //Update a box that anounce the ending in the screen.
         //Exit button is back to lobby, its should destroy the game
     }

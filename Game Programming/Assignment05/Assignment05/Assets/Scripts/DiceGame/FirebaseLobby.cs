@@ -45,7 +45,7 @@ public class FirebaseLobby : MonoBehaviour
         UpdateGameList();
     }
 
-    private void UpdateGameList()
+    public void UpdateGameList()
     {
         foreach (Transform child in myGameListPanel)
         {
@@ -115,8 +115,6 @@ public class FirebaseLobby : MonoBehaviour
             rightArrow.interactable = true;
             leftArrow.interactable = true;
         }
-
-        Debug.Log("Trying to change Avatar. Current sprite is: " + currentSprite);
     }
 
     public void SetNewAvatar()
@@ -129,17 +127,17 @@ public class FirebaseLobby : MonoBehaviour
     public void CreateGame()
     {
         Debug.Log("tryin to create game");
-        if (displayName.text == "" || userInfo.activeGames.Count > 2)
+        if (displayName.text == "" || userInfo.activeGames.Count >= 3)
             return;
         
 
         Debug.Log("Trying to create Game Info for new game");
         var newGameInfo = new GameInfo();
-        newGameInfo.displayName = "Game " + newGameInfo.round + "/20";      //Set the game to show how many rounds has gone and of how many
-
+        newGameInfo.displayName = displayName.text;
         var dicePlayerInfo = new DicePlayerInfo();
         dicePlayerInfo.userID = ActiveUser.Instance.userID;
         dicePlayerInfo.displayName = displayName.text;
+        dicePlayerInfo.spriteIndex = userInfo.sprite;
 
         newGameInfo.dicePlayers = new List<DicePlayerInfo>();
         newGameInfo.dicePlayers.Add(dicePlayerInfo);
@@ -158,12 +156,12 @@ public class FirebaseLobby : MonoBehaviour
 
         StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
 
-        GameCreated(key);          
+        GameCreated(key);
     }
 
     public void GameCreated(string gameKey)
     {
-        Debug.Log("Trying to att game to list");
+        Debug.Log("Trying to add game to list");
         if (userInfo.activeGames == null)
         {
             userInfo.activeGames = new List<string>();
@@ -171,7 +169,6 @@ public class FirebaseLobby : MonoBehaviour
         userInfo.activeGames.Add(gameKey);
 
         string jsondata = JsonUtility.ToJson(userInfo);
-
         StartCoroutine(FirebaseManager.Instance.SaveData("users/" + userID, jsondata, UpdateGameList));
     }
 
@@ -217,6 +214,7 @@ public class FirebaseLobby : MonoBehaviour
         var dicePlayerInfo = new DicePlayerInfo();
         dicePlayerInfo.displayName = displayName.text;
         dicePlayerInfo.userID = ActiveUser.Instance.userID;
+        dicePlayerInfo.spriteIndex = userInfo.sprite;
         gameInfo.dicePlayers.Add(dicePlayerInfo);
 
         gameInfo.displayName = gameInfo.dicePlayers[0].displayName + " vs " + dicePlayerInfo.displayName;
@@ -224,6 +222,8 @@ public class FirebaseLobby : MonoBehaviour
         jsondata = JsonUtility.ToJson(gameInfo);
 
         StartCoroutine(FirebaseManager.Instance.SaveData("games/" + gameInfo.gameID, jsondata));
+        UpdateGameList();
+        ListGames();
     }
 
     public void LogOut()
