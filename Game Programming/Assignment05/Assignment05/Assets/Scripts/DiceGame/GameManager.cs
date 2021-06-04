@@ -1,6 +1,4 @@
 ﻿using Firebase.Database;
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -31,6 +29,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text roundText;
     public int round = 0;
     public int maxRounds = 15;
+    public GameObject exitButton;
 
     private int scoreGiven = 500; 
     private bool gameEnded;
@@ -47,6 +46,7 @@ public class GameManager : MonoBehaviour
         {
             newRound = new UnityEvent();
         }
+        exitButton.SetActive(false);
 
         //Start with values from that activeGameInfo
         gameInfo = ActiveGame.Instance.activeGameInfo;
@@ -65,21 +65,13 @@ public class GameManager : MonoBehaviour
         player1.GetComponent<SetSprite>().UpdateSprite(gameInfo.dicePlayers[0].spriteIndex);
         player2.GetComponent<SetSprite>().UpdateSprite(gameInfo.dicePlayers[1].spriteIndex);
 
-
         UpdateValue();
         oldValue = currentValue;
         roundText.text = "Round: " + round.ToString() + "/" + maxRounds.ToString();
 
         UpdateDicePlayerToActivePlayer();
 
-        if (!currentPlayer.hasGuessed && !otherPlayer.hasGuessed)
-        {
-            currentStatus = PlayerStatus.guessing;
-        }
-        else if (currentPlayer.hasGuessed)
-        {
-            currentStatus = PlayerStatus.waiting;
-        }
+        UpdateStatusTextGuessed();
     }
 
 
@@ -89,6 +81,7 @@ public class GameManager : MonoBehaviour
         {
             if (player1.hasGuessed && player2.hasGuessed)
             {
+                Debug.Log("If both have guessed. Create new Round");
                 dice1.RollTheDie(gameInfo.dice1);
                 dice2.RollTheDie(gameInfo.dice2);
                 NewRound();
@@ -176,6 +169,9 @@ public class GameManager : MonoBehaviour
         {
             gameInfo.dicePlayers[0].guessedHigher = currentPlayer.playerGuessHiger;
             gameInfo.dicePlayers[0].hasGussed = currentPlayer.hasGuessed;
+            player1up.interactable = false;
+            player1down.interactable = false;
+
             player += 0;
             i = 0;
         }
@@ -183,6 +179,9 @@ public class GameManager : MonoBehaviour
         {
             gameInfo.dicePlayers[1].guessedHigher = currentPlayer.playerGuessHiger;
             gameInfo.dicePlayers[1].hasGussed = currentPlayer.hasGuessed;
+            player2up.interactable = false;
+            player2down.interactable = false;
+
             player += 1;
             i = 1;
         }
@@ -231,7 +230,19 @@ public class GameManager : MonoBehaviour
         round++;
         roundText.text = "Round: " + round.ToString() + "/" + maxRounds.ToString();
         newRound.Invoke();
-        UpdateRoundOnline();       
+        UpdateRoundOnline();
+
+        if (currentPlayer == player1)
+        {
+            player1up.interactable = true;
+            player1down.interactable = true;
+        }
+        else
+        {
+            player2up.interactable = true;
+            player2down.interactable = true;
+        }
+        
     }
 
     public void UpdateRoundOnline()
@@ -244,6 +255,7 @@ public class GameManager : MonoBehaviour
         //Dice seeds
         int seed1 = Random.Range(0, 100);
         int seed2 = Random.Range(0, 100);
+        Debug.Log("UpdateRoundOnline: Updating Dices");
         gameInfo.dice1 = seed1;
         gameInfo.dice2 = seed2;
 
@@ -304,6 +316,7 @@ public class GameManager : MonoBehaviour
         string jsondata = JsonUtility.ToJson(gameInfo);
         StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
         ActiveGame.Instance.activeGameInfo = gameInfo;
+        Debug.Log("Reolling: Updating Dices and game Game Info");
     }
 
 
@@ -323,13 +336,14 @@ public class GameManager : MonoBehaviour
     {
         var activeUser = ActiveUser.Instance.userInfo;
 
+        exitButton.SetActive(true);
+
         if (currentPlayer.score > otherPlayer.score)
         {
             Debug.Log("You WON!");
-            currentStatus = PlayerStatus.win;
-            ChangeStatusText();
             activeUser.victories++;
-            
+            currentStatus = PlayerStatus.win;
+            ChangeStatusText();                   
         }
         else if (currentPlayer.score < otherPlayer.score)
         {
@@ -344,8 +358,20 @@ public class GameManager : MonoBehaviour
             ChangeStatusText();
         }
 
+        //Remove game online?
+
+        //Update a box that anounce the ending in the screen.
+
+
+        //Exit button is back to lobby, its should destroy the game
+    }
+
+    public void ExitFinnishedGame()
+    {
+        var activeUser = ActiveUser.Instance.userInfo;
+
         //Remove game for user
-        for ( int i = 0; i < activeUser.activeGames.Count; i++)
+        for (int i = 0; i < activeUser.activeGames.Count; i++)
         {
             if (activeUser.activeGames[i].Equals(gameInfo.gameID))
             {
@@ -353,16 +379,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        //Remove game online?
-
-
         //Save online
         string path = "users/" + activeUser;
         string jsondata = JsonUtility.ToJson(activeUser);
         Debug.Log("Saving winner to database");
         StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
-
-        //Update a box that anounce the ending in the screen.
-        //Exit button is back to lobby, its should destroy the game
     }
 }

@@ -42,6 +42,8 @@ public class FirebaseLobby : MonoBehaviour
         currentSprite = userInfo.sprite;
         avatar.sprite = avatarSprite[currentSprite];
 
+        newDisplayName.text = displayName.text;
+
         UpdateGameList();
     }
 
@@ -65,6 +67,16 @@ public class FirebaseLobby : MonoBehaviour
         var newButton = Instantiate(gameButtonPrefab, myGameListPanel).GetComponent<Button>();
         newButton.GetComponentInChildren<TextMeshProUGUI>().text = gameInfo.displayName;
         newButton.onClick.AddListener(() => ActiveGame.Instance.StartGame(gameInfo));
+
+        if (gameInfo.dicePlayers.Count == 2)
+        {
+            newButton.interactable = true;
+        }
+        else
+        {
+            newButton.interactable = false;
+        }
+        
     }
 
     public void ShowPlayerEditPanel()
