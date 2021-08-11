@@ -3768,7 +3768,7 @@ MonoBehaviour:
   player2down: {fileID: 469154520}
   roundText: {fileID: 252834449}
   round: 1
-  maxRounds: 15
+  maxRounds: 5
   exitButton: {fileID: 1456036852}
   currentStatus: 0
   gameStatusText: {fileID: 1559870724}

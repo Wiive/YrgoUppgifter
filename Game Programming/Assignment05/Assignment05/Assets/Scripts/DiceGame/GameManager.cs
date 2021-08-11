@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
     [Header("Game Status")]
     public TMP_Text roundText;
     public int round = 0;
-    public int maxRounds = 15;
+    public int maxRounds = 5;
     public GameObject exitButton;
 
     private int scoreGiven = 500; 
@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
         gameInfo = ActiveGame.Instance.activeGameInfo;
         round = gameInfo.round;
 
+        // >>>>>>>>>>>>>KOLLA HÄR<<<<<<<<<<<<<< kan detta får det att spöka?
         dice1.RollTheDie(gameInfo.dice1);
         dice2.RollTheDie(gameInfo.dice2);
        
@@ -82,16 +83,22 @@ public class GameManager : MonoBehaviour
             if (player1.hasGuessed && player2.hasGuessed)
             {
                 Debug.Log("If both have guessed. Create new Round");
+ 
+                NewRound();
                 dice1.RollTheDie(gameInfo.dice1);
                 dice2.RollTheDie(gameInfo.dice2);
-                NewRound();
             }      
         }
 
         else if (!gameEnded)
         {
             gameEnded = true;
+            //Show current Ending for the player
             Debug.Log("Game is finnised!");
+            player1up.interactable = false;
+            player1down.interactable = false;
+            player2up.interactable = false;
+            player2down.interactable = false;
             UpdateWinner();
         }
 
