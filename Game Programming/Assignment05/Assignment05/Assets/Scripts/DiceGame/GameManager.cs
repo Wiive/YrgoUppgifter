@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
             i = 1;
         }
 
-        RefreshFromOnline();
+        //RefreshFromOnline();
         string path = "games/" + gameInfo.gameID + player;
         string jsondata = JsonUtility.ToJson(gameInfo.dicePlayers[i]);
         StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
@@ -255,10 +255,22 @@ public class GameManager : MonoBehaviour
     public void UpdateRoundOnline()
     {
         gameInfo.round = round;
-        gameInfo.dicePlayers[0].score = player1.score;
-        gameInfo.dicePlayers[1].score = player2.score;
-        gameInfo.dicePlayers[0].hasGussed = player1.hasGuessed;
-        gameInfo.dicePlayers[1].hasGussed = player2.hasGuessed;
+
+        if (currentPlayer == player1)
+        {
+            gameInfo.dicePlayers[0].score = player1.score;
+            gameInfo.dicePlayers[0].hasGussed = player1.hasGuessed;
+        }
+        else
+        {
+            gameInfo.dicePlayers[1].score = player2.score;
+            gameInfo.dicePlayers[1].hasGussed = player2.hasGuessed;
+        }
+
+        //gameInfo.dicePlayers[0].score = player1.score;
+        //gameInfo.dicePlayers[1].score = player2.score;
+        //gameInfo.dicePlayers[0].hasGussed = player1.hasGuessed;
+        //gameInfo.dicePlayers[1].hasGussed = player2.hasGuessed;
         //Dice seeds
         int seed1 = Random.Range(0, 100);
         int seed2 = Random.Range(0, 100);
@@ -376,6 +388,7 @@ public class GameManager : MonoBehaviour
     public void ExitFinnishedGame()
     {
         var activeUser = ActiveUser.Instance.userInfo;
+        var userID = ActiveUser.Instance.userID;
 
         //Remove game for user
         for (int i = 0; i < activeUser.activeGames.Count; i++)
@@ -387,8 +400,9 @@ public class GameManager : MonoBehaviour
         }
 
         //Save online
-        string path = "users/" + activeUser;
+        string path = "users/" + userID;
         string jsondata = JsonUtility.ToJson(activeUser);
+
         Debug.Log("Saving winner to database");
         StartCoroutine(FirebaseManager.Instance.SaveData(path, jsondata));
     }
